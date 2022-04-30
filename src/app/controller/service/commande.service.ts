@@ -6,7 +6,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class CommandeService {
-  private urlBase = 'http://localhost:8070';
+  private urlBase = 'http://localhost:8090'
   private url = '/api/v1/commande'
   private _commande: Commande;
   private _commandes: Array<Commande>;
@@ -20,7 +20,7 @@ export class CommandeService {
 
   public save() {
     if (this.commande.id == null) {
-      this.http.post(this.urlBase + this.url + '/', this.commande).subscribe(
+      this.http.post<number>(this.urlBase + this.url + '/', this.commande).subscribe(
         data => {
           if (data > 0) {
             this.commandes.push({...this.commande});
