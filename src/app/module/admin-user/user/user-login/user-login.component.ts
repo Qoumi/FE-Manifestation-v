@@ -29,9 +29,6 @@ export class UserLoginComponent implements OnInit {
     const formValues = this.loginForm.value;
     const username = formValues.username;
     const passowrd = formValues.password;
-    const role = this.roleService.hasRole(username);
-
-
     this.authService.loginAdmin(username,passowrd);
 
   }

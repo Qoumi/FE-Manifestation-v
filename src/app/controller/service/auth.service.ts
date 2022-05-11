@@ -33,14 +33,12 @@ export class AuthService {
   public loginAdmin(username: string, password: string) {
     this.http.post<any>(this.API + 'login', { username, password }, { observe: 'response' }).subscribe(
       resp => {
-
         this.error = null;
         const jwt = resp.headers.get('Authorization');
         jwt != null ? this.tokenService.saveToken(jwt) : false;
-
         this.loadInfos();
         console.log('you are logged in successfully');
-        this.router.navigate(['/commandes']);
+        this.router.navigate(['/user-space/demandes']);
       }, (error: HttpErrorResponse) => {
         this.error = error.error;
         console.log(error);
@@ -66,6 +64,15 @@ export class AuthService {
     this.authenticated = true;
     this._loggedIn.next(true);
 
+  }
+
+
+  get authenticatedUser(): User {
+    return this._authenticatedUser;
+  }
+
+  set authenticatedUser(value: User) {
+    this._authenticatedUser = value;
   }
 
   login(username, password) {

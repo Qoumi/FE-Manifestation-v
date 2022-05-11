@@ -9,7 +9,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { UserLoginComponent } from './module/admin-user/user/user-login/user-login.component';
 import { HomePageComponent } from './module/home-page/home-page.component';
-import { AdminRoutingModule } from './module/admin-user/admin-routing.module';
 import { AppRoutingModule } from './app-routing.module';
 import { UserCreateAccountComponent } from './module/admin-user/user/user-create-account/user-create-account.component';
 import { UserRoutingModule } from './module/admin-user/user/user-login/user-routing.module';
@@ -24,6 +23,15 @@ import {
 import {
   DemandeHistoryComponent
 } from "./module/admin-user/admin/view/demande-admin/demande-history/demande-history.component";
+import {
+  DemandeCreateComponent
+} from "./module/admin-user/user/view/demande-user/demande-create/demande-create.component";
+import {DemandeUserComponent} from "./module/admin-user/user/view/demande-user/demande-user.component";
+import {DemandeListComponent} from "./module/admin-user/user/view/demande-user/demande-list/demande-list.component";
+import { NavbarComponent } from './module/admin-user/user/view/navbar/navbar.component';
+import { SidebarComponent } from './module/admin-user/user/view/sidebar/sidebar.component';
+import { DemandeDetailsComponent } from './module/admin-user/user/view/demande-user/demande-details/demande-details.component';
+import { DemandeEditComponent } from './module/admin-user/user/view/demande-user/demande-edit/demande-edit.component';
 
 @NgModule({
   declarations: [
@@ -38,14 +46,20 @@ import {
     DemandeToUpdateComponent,
     DemandeEnCoursComponent,
     DemandeHistoryComponent,
-    DemandeAdminComponent
+    DemandeAdminComponent,
+    DemandeCreateComponent,
+    DemandeUserComponent,
+    DemandeListComponent,
+    NavbarComponent,
+    SidebarComponent,
+    DemandeDetailsComponent,
+    DemandeEditComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminRoutingModule,
     AppRoutingModule,
     UserRoutingModule,
   ],

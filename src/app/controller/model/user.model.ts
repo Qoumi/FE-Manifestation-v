@@ -1,3 +1,5 @@
+import {Demande} from "./demande.model";
+
 export class User {
   public credentialsNonExpired: boolean;
   public enabled: boolean;
@@ -15,4 +17,5 @@ export class User {
   public  createdAt: Date;
   public  updatedAt: Date;
   public roles: any = [];
+  public demandes=new Array<Demande>();
 }
