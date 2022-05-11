@@ -1,0 +1,229 @@
+
+<section xmlns="http://www.w3.org/1999/html" style="background-color: floralwhite;margin-top: 50px">
+  <div class="col-md-8 offset-2" style="background-color: antiquewhite">
+    <header>
+      <table class="table">
+        <thead>
+        <th>Demande</th>
+        <th>Référence</th>
+        <th>Status</th>
+        <th>Date start</th>
+        <th>remarque</th>
+        </thead>
+        <tbody>
+        <tr>
+          <td>organisation de colloque</td>
+          <td>C13e0075</td>
+          <td>en cours de traitement</td>
+          <td>22-04-2022</td>
+          <td>pas de remarque</td>
+        </tr>
+        </tbody>
+      </table>
+   </header>
+    <body class="mt-4" style="background-color: beige">
+    <h2 class="text-center">Manifestation</h2>
+    <div class="row">
+      <div class="p-field col-md-3">
+      <label for="1">Intitulé</label>
+      <input  type="text" pInputText [disabled]="true"
+             placeholder="intitulé"  [(ngModel)]="manifestation.name"
+             id="1" [(ngModel)]="manifestation.name"
+             autofocus>
+      </div>
+      <div class="p-field col-md-3">
+      <label for="2">Lieu d'organisation</label>
+      <input type="text" pInputText [disabled]="true"
+             placeholder="Reference"  [(ngModel)]="manifestation.lieu"
+             id="2" [(ngModel)]="manifestation.lieu"
+             autofocus>
+      </div>
+      <div class="p-field  col-md-3">
+      <label for="3">nombre des participants</label>
+      <input  type="text" pInputText [disabled]="true"
+             placeholder="Reference"  [(ngModel)]="manifestation.nbrParticipantPrevu"
+             id="3" [(ngModel)]="manifestation.nbrParticipantPrevu"
+             autofocus>
+      </div>
+      <div class="p-field col-md-3">
+      <label for="4">Site Web de manifestation</label>
+      <input  type="text" pInputText [disabled]="true"
+             placeholder="Reference"  [(ngModel)]="manifestation.siteWeb"
+             id="4" [(ngModel)]="manifestation.siteWeb"
+             autofocus>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="p-field col-md-4">
+        <label for="5">Etendue</label>
+        <input  type="text" pInputText [disabled]="true"
+                placeholder="etendue"  [(ngModel)]="manifestation.etentue"
+                id="5" [(ngModel)]="manifestation.etentue"
+                autofocus>
+      </div>
+      <div class="p-field  col-md-4">
+        <label for="6">Date début</label>
+        <input  type="text" pInputText [disabled]="true"
+                placeholder="date de début"  [(ngModel)]="manifestation.dateStart"
+                id="6" [(ngModel)]="manifestation.dateStart"
+                autofocus>
+      </div>
+      <div class="p-field  col-md-4">
+        <label for="7">Date de fin</label>
+        <input  type="text" pInputText [disabled]="true"
+                placeholder="date de fin"  [(ngModel)]="manifestation.dateEnd"
+                id="7" [(ngModel)]="manifestation.dateEnd"
+                autofocus>
+      </div>
+    </div>
+
+<div class="mt-4">
+  <h4 class="text-center">Coordonnateur de la manifestation</h4>
+  <div class="row">
+    <div class="p-field col-md-3">
+      <label >Prénom coordonnateur</label>
+      <input  type="text" pInputText [disabled]="true"
+              placeholder="prénom"  [(ngModel)]="manifestation.coordonnateur.firstName"
+               [(ngModel)]="manifestation.name"
+              autofocus>
+    </div>
+    <div class="p-field col-md-3">
+      <label>Nom coordonnateur</label>
+      <input type="text" pInputText [disabled]="true"
+             placeholder="nom"  [(ngModel)]="manifestation.coordonnateur.lasttName"
+             [(ngModel)]="manifestation.lieu"
+             autofocus>
+    </div>
+    <div class="p-field  col-md-3">
+      <label >Etablissement</label>
+      <input  type="text" pInputText [disabled]="true"
+              placeholder="etablissemnt"  [(ngModel)]="manifestation.coordonnateur.establishmentName"
+              [(ngModel)]="manifestation.nbrParticipantPrevu"
+              autofocus>
+    </div>
+    <div class="p-field col-md-3">
+      <label >Grade</label>
+      <input  type="text" pInputText [disabled]="true"
+              placeholder="grade"  [(ngModel)]="manifestation.coordonnateur.grade"
+               [(ngModel)]="manifestation.siteWeb"
+              autofocus>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="p-field col-md-4">
+      <label >Email</label>
+      <input  type="text" pInputText [disabled]="true"
+              placeholder="email"  [(ngModel)]="manifestation.coordonnateur.email"
+             [(ngModel)]="manifestation.etentue"
+              autofocus>
+    </div>
+    <div class="p-field  col-md-4">
+      <label >Tel</label>
+      <input  type="text" pInputText [disabled]="true"
+              placeholder="tel"  [(ngModel)]="manifestation.coordonnateur.tel"
+              [(ngModel)]="manifestation.dateStart"
+              autofocus>
+    </div>
+    <div class="p-field  col-md-4">
+      <label >Fax</label>
+      <input  type="text" pInputText [disabled]="true"
+              placeholder="fax"  [(ngModel)]="manifestation.coordonnateur.fax"
+              [(ngModel)]="manifestation.dateEnd"
+              autofocus>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4">
+  <h4 class="text-center">Entité chargé de l'organisation</h4>
+  <div class="row mt-3">
+    <div class="p-field col-md-4">
+      <label >Nom d'entité d'organisation</label>
+      <input  type="text" pInputText [disabled]="true"
+              placeholder="nom d'entité"  [(ngModel)]="manifestation.entityOrganisation.name"
+              [(ngModel)]="manifestation.etentue"
+              autofocus>
+    </div>
+    <div class="p-field  col-md-4">
+      <label >responsable d'entité</label>
+      <input  type="text" pInputText [disabled]="true"
+              placeholder="responsable"  [(ngModel)]="manifestation.entityOrganisation.responsableName"
+              [(ngModel)]="manifestation.dateStart"
+              autofocus>
+    </div>
+    <div class="p-field  col-md-4">
+      <label >etablissemnet d'entité</label>
+      <input  type="text" pInputText [disabled]="true"
+              placeholder="etablissement"  [(ngModel)]="manifestation.entityOrganisation.establishmentName"
+              [(ngModel)]="manifestation.dateEnd"
+              autofocus>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <div class="mt-4 col-md-6">
+      <table class="table table-bordered">
+        <thead>
+        <th>Etablissements impliqué dans l'organisation</th>
+        </thead>
+        <tbody>
+        <tr>
+          <td *ngFor="let e of manifestation.implicatedEstablishments">{{e.name}}</td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-4 col-md-6">
+      <table class="table table-bordered">
+        <thead>
+        <th>Partenaires impliqué dans l'organisation</th>
+        </thead>
+        <tbody>
+        <tr>
+          <td *ngFor="let p of manifestation.implicatedPartners">{{p.name}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+    <div class="mt-4">
+      <h4 class="text-center">Les memnres de commité d'organisation</h4>
+      <table class="table">
+        <thead>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Etablissement</th>
+        <th>Université</th>
+        <th>tel</th>
+        <th>Email</th>
+        </thead>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+    </body>
+
+
+
+  </div>
+<div class="col-md-2 offset-5">
+  <div class="row">
+  <button class="col-md-6 btn-outline-primary" (click)="showDialogEdit()">Modifier</button>
+  <button class="col-md-6 btn-outline-danger">supprimer</button>
+  </div>
+</div>
+</section>
+
+

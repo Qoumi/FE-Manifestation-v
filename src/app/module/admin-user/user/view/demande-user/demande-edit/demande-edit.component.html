@@ -1,0 +1,558 @@
+<app-navbar></app-navbar>
+
+<section class="bg" style="margin-top: 100px">
+  <div class="container py-5 h-100" style="background-color: #da3604">
+    <h1 class="text-center text-white">Demande de soutien pour une manifestation</h1>
+    <div class="row">
+      <div  class="card-body px-4 py-5 px-md-5" >
+        <form [formGroup]="personalDetails" class="msform">
+          <!-- progressbar -->
+          <ul id="progressbar">
+            <li [ngClass]="step>=1 ? 'active ' : 'inactive'">Info sur la manifestation</li>
+            <li [ngClass]="step>=2 ? 'active' : 'inactive'">Chargés de l'organisation</li>
+            <li [ngClass]="step==3 ? 'active' : 'inactive'">Les contributions</li>
+            <li [ngClass]="step==4 ? 'active' : 'inactive'">Soutiens sollicités</li>
+          </ul>
+          <!-- fieldsets -->
+          <fieldset  *ngIf="step == 1" >
+            <h2 class="fs-title">informations sur la manifestation</h2>
+
+            <input type="text" formControlName="name"  [ngClass]="{ 'is-invalid': personal_step && personal['name'].errors }" placeholder="Manifestation"/>
+            <div *ngIf="personal_step && personalDetails.controls['name'].errors">
+              <div *ngIf="personal['name'].errors?.['required']">Name is required</div>
+            </div>
+
+            <input type="text" formControlName="lieu" name="lieu" placeholder="Lieu"/>
+            <div *ngIf="personal_step && personalDetails.controls['lieu'].errors">
+              <div *ngIf="personal['lieu'].errors?.['required']">lieu is required</div>
+            </div>
+
+            <input type="number" formControlName="nbrParticipantPrevu" name="nbrParticipantPrevu" placeholder="Nombre de participants"/>
+            <div *ngIf="personal_step && personalDetails.controls['nbrParticipantPrevu'].errors">
+              <div *ngIf="personal['nbrParticipantPrevu'].errors?.['required']">nombre is required</div>
+            </div>
+
+            <input type="text" formControlName="siteWeb" name="siteWeb" placeholder="site Web de manifestation"/>
+            <div *ngIf="personal_step && personalDetails.controls['siteWeb'].errors">
+              <div *ngIf="personal['siteWeb'].errors?.['required']">site web is required</div>
+            </div>
+
+            <div class="row">
+              <div class="card-body col-md-5" style="background-color: azure">
+                <div class="row">
+                  <div class="col-md-10">
+                    <input type="text" placeholder="établissements impliqués" class="form-control"
+                           [(ngModel)]="selectedImplicatedEstablishments.name" [ngModelOptions]="{standalone: true}" >
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-block btn-danger" (click)="addImplicatedEstablishment()" >+</button>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <table class="table table-striped table-hover">
+                    <thead>
+                    <th>Etablissement</th>
+                    <th>Action</th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let e of manifestation.implicatedEstablishments; index as i">
+                      <td>{{e.name}}</td>
+                      <td><span (click)="deleteImplicatedEstablishment(i)"><i class="fa fa-trash btn btn-danger"></i> </span></td>
+                      <td><span (click)="updateImplicatedEstablishment(i,e)"><i class="fa fa-edit btn btn-warning"></i> </span></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+
+              <div class="card-body col-md-5" style="background-color: aliceblue">
+                <div class="row">
+
+                  <div class="col-md-10">
+                    <input type="text" placeholder="partenaires impliqués" class="form-control"
+                           [(ngModel)]="implicatedPartner.name" [ngModelOptions]="{standalone: true}" >
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-block btn-danger" (click)="addImplicatedPartner()" >+</button>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <table class="table table-striped table-hover">
+                    <thead>
+                    <th>Partenaire</th>
+                    <th>Action</th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let p of implicatedPartners; index as i">
+                      <td>{{p.name}}</td>
+                      <td><span (click)="deleteImplicatedPartner(i)"><i class="fa fa-trash btn btn-danger"></i> </span></td>
+                      <td><span (click)="updateImplicatedPartner(i,p)"><i class="fa fa-edit btn btn-warning"></i> </span></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+            <input (click)="next()" type="button" name="next"  class="next action-button" style="background-color: #2C3E50" value="Next"/>
+          </fieldset>
+        </form>
+
+
+        <form [formGroup]="addressDetails" class="msform">
+          <fieldset *ngIf="step == 2" >
+
+
+            <h2 class="fs-title mt">chargés de l'organisation</h2>
+            <form [formGroup]="entityDetails">
+              <div class="container-fluid" style="background-color: lavender">
+                <h4 class="text-black bg-white mt-5">Entité chargée de l'organistation</h4>
+                <div class="row">
+                  <div class="col-md-6 mb-4 mt-4">
+                    <div class="row">
+                      <div class="col-md-7"><label class="text-white">Nom de l'entité de recherche:</label></div>
+                      <div class="col-md-5">
+                        <select class="select" formControlName="name">
+                          <option value="1">None</option>
+                          <option value="2">Laboratoire</option>
+                          <option value="3">Equipe</option>
+                          <option value="4">Unité</option>
+                          <option value="4">Centre</option>
+                          <option value="4">Groupe</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <input type="text" formControlName="responsableName"  placeholder="Responsable de l'entité"/>
+                    <!--  <div *ngIf="address_step && entityDetails.controls['responsableName'].errors">
+                         <div *ngIf="entity['responsableName'].errors?.['required']">City is required</div>
+                       </div> -->
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="establishmentName"  placeholder="Etablissement"/>
+                    <!-- <div *ngIf="address_step && entityDetails.controls['establishmentName'].errors">
+                         <div *ngIf="entity['establishmentName'].errors?.['required']">City is required</div>
+                       </div> -->
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="container-fluid mt-5" style="background-color: lightgray">
+              <h5 style="color: black">Coordonnateur de la manifestation</h5>
+              <div class="row">
+                <div class="col-md-4">
+                  <input type="text" formControlName="lastName"  placeholder="Nom"/>
+                  <div *ngIf="address_step && addressDetails.controls['lastName'].errors">
+                    <div *ngIf="address['lastName'].errors?.['required']">Pincode is required</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <input type="text" formControlName="firstName"  placeholder="Prénom"/>
+                  <div *ngIf="address_step && addressDetails.controls['firstName'].errors">
+                    <div *ngIf="address['firstName'].errors?.['required']">Pincode is required</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <input type="text" formControlName="grade"  placeholder="Grade"/>
+                  <div *ngIf="address_step && addressDetails.controls['grade'].errors">
+                    <div *ngIf="address['grade'].errors?.['required']">Pincode is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text" formControlName="establishmentName"  placeholder="Etablissement"/>
+                  <div *ngIf="address_step && addressDetails.controls['establishmentName'].errors">
+                    <div *ngIf="address['establishmentName'].errors?.['required']">Pincode is required</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" formControlName="email"  placeholder="Email"/>
+                  <div *ngIf="address_step && addressDetails.controls['email'].errors">
+                    <div *ngIf="address['email'].errors?.['required']">Pincode is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text" formControlName="tel"  placeholder="N° de Téléphone"/>
+                  <div *ngIf="address_step && addressDetails.controls['tel'].errors">
+                    <div *ngIf="address['tel'].errors?.['required']">Pincode is required</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" formControlName="fax"  placeholder="Fax"/>
+                  <div *ngIf="address_step && addressDetails.controls['fax'].errors">
+                    <div *ngIf="address['fax'].errors?.['required']">Pincode is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body mt-5" style="background-color: gainsboro">
+              <h5 style="color: black"> Les membres de comité d'organisation</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text"  placeholder="Nom" [(ngModel)]="committeeOrganisation.lastName" [ngModelOptions]="{standalone: true}"/>
+                  <!-- <div *ngIf="address_step && addressDetails.controls['city'].errors">
+                     <div *ngIf="address['city'].errors?.['required']">City is required</div>
+                   </div> -->
+                </div>
+                <div class="col-md-6">
+                  <input type="text"  placeholder="Prénom" [(ngModel)]="committeeOrganisation.firstName" [ngModelOptions]="{standalone: true}"/>
+                  <!-- <div *ngIf="address_step && addressDetails.controls['city'].errors">
+                     <div *ngIf="address['city'].errors?.['required']">City is required</div>
+                   </div> -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text"  placeholder="Etablissement" [(ngModel)]="committeeOrganisation.establishmentName" [ngModelOptions]="{standalone: true}"/>
+                  <!-- <div *ngIf="address_step && addressDetails.controls['city'].errors">
+                      <div *ngIf="address['city'].errors?.['required']">City is required</div>
+                    </div> -->
+                </div>
+                <div class="col-md-6">
+                  <input type="text"  placeholder="Université" [(ngModel)]="committeeOrganisation.universityName" [ngModelOptions]="{standalone: true}"/>
+                  <!--   <div *ngIf="address_step && addressDetails.controls['city'].errors">
+                         <div *ngIf="address['city'].errors?.['required']">City is required</div>
+                       </div> -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text"  placeholder="Email" [(ngModel)]="committeeOrganisation.email" [ngModelOptions]="{standalone: true}"/>
+                  <!--  <div *ngIf="address_step && addressDetails.controls['city'].errors">
+                      <div *ngIf="address['city'].errors?.['required']">City is required</div>
+                    </div> -->
+                </div>
+                <div class="col-md-6">
+                  <input type="text"   placeholder="N° de Téléphone" [(ngModel)]="committeeOrganisation.tel" [ngModelOptions]="{standalone: true}"/>
+                  <!--  <div *ngIf="address_step && addressDetails.controls['city'].errors">
+                       <div *ngIf="address['city'].errors?.['required']">City is required</div>
+                     </div>  -->
+                </div>
+              </div>
+              <div class="col-md-2 offset-10">
+                <button class="btn btn-outline-danger" (click)="addCommitteeOrganisation()">Ajouter</button>
+              </div>
+              <div class="mt-3">
+                <table class="table table-striped table-hover table-bordered">
+                  <thead>
+                  <th>Nom</th>
+                  <th>Prénom</th>
+                  <th>Etablissement</th>
+                  <th>Université</th>
+                  <th>Tel</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let c of committeeOrganisations;index as i">
+                    <td>{{c.lastName}}</td>
+                    <td>{{c.firstName}}</td>
+                    <td>{{c.establishmentName}}</td>
+                    <td>{{c.universityName}}</td>
+                    <td>{{c.tel}}</td>
+                    <td>{{c.email}}</td>
+                    <td><span (click)="deleteCommitteeOrganisation(i)"   ><i class="fa fa-trash btn btn-danger"></i> </span></td>
+                    <td><span  (click)="updateCommitteeOrganisation(i,c)"  ><i class="fa fa-edit btn btn-warning"></i> </span></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+
+            <input (click)="previous()" type="button" style="background-color: #666666" name="previous" class="previous action-button-previous" value="Previous"/>
+            <input  (click)="next()" type="button" style="background-color: #2C3E50" name="next" class="next action-button" value="Next"/>
+
+          </fieldset>
+        </form>
+
+
+        <form  class="msform">
+          <fieldset *ngIf="step == 3">
+            <h2 class="fs-title">Les contributions</h2>
+
+            <div class="mt-5" style="background-color: gainsboro">
+              <h5 class="text-black">Contribution des participants</h5>
+              <div class="row">
+                <div class="col-md-4">
+                  <input type="text"  placeholder="Nom" [(ngModel)]="contributionParticipant.lastName"  [ngModelOptions]="{standalone: true}"/>
+                  <div *ngIf="education_step && educationalDetails.controls['highest_qualification'].errors">
+                    <div *ngIf="education['highest_qualification'].errors?.['required']">Highest qualification is required</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <input type="text"  placeholder="Prénom" [(ngModel)]="contributionParticipant.firstName"  [ngModelOptions]="{standalone: true}"/>
+                  <div *ngIf="education_step && educationalDetails.controls['highest_qualification'].errors">
+                    <div *ngIf="education['highest_qualification'].errors?.['required']">Highest qualification is required</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <input type="text"  placeholder="Cin" [(ngModel)]="contributionParticipant.cin"  [ngModelOptions]="{standalone: true}"/>
+                  <div *ngIf="education_step && educationalDetails.controls['highest_qualification'].errors">
+                    <div *ngIf="education['highest_qualification'].errors?.['required']">Highest qualification is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8 mt-4">
+                  <label class="text-black">Fonction  : </label>
+                  <select class="select" [(ngModel)]="contributionParticipant.fonction"  [ngModelOptions]="{standalone: true}">
+                    <option value="None">None</option>
+                    <option value="Enseignant chercheur de l'université">Enseignant chercheur de l'université</option>
+                    <option value="Enseignant chercheur d'autre université">Enseignant chercheur d'autre université</option>
+                    <option value="Professionnel">Professionnel</option>
+                    <option value="Etudiant chercheur">Etudiant chercheur</option>
+                    <option value="Autre">Autre</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <input type="text"  placeholder="Montant *" [(ngModel)]="contributionParticipant.montant"  [ngModelOptions]="{standalone: true}"/>
+                  <div *ngIf="education_step && educationalDetails.controls['highest_qualification'].errors">
+                    <div *ngIf="education['highest_qualification'].errors?.['required']">Highest qualification is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 offset-10 mb-4">
+                <button class="btn btn-block btn-danger col-md-3 offset-2 mb-3" (click)="addContributionParticipant()">+</button>
+              </div>
+              <table class="table table-bordered table-striped">
+                <thead>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Cin</th>
+                <th>Fonction</th>
+                <th>Montant</th>
+                <th>Action</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let p of contributionParticipants;index as i" >
+                  <td>{{p.firstName}}</td>
+                  <td>{{p.lastName}}</td>
+                  <td>{{p.cin}}</td>
+                  <td>{{p.fonction}}</td>
+                  <td>{{p.montant}}</td>
+                  <td><span   ><i class="fa fa-trash btn btn-danger"></i> </span></td>
+                  <td><span   ><i class="fa fa-edit btn btn-warning"></i> </span></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-5" style="background-color: lavender">
+              <h5 class="text-black">Contribution des établissements</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text"  placeholder="Nom d'établissement" [(ngModel)]="contributionEstablishment.establishmentName"  [ngModelOptions]="{standalone: true}"/>
+                  <div *ngIf="education_step && educationalDetails.controls['highest_qualification'].errors">
+                    <div *ngIf="education['highest_qualification'].errors?.['required']">Highest qualification is required</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <input type="text"  placeholder="Montant de contribution" [(ngModel)]="contributionEstablishment.montant"  [ngModelOptions]="{standalone: true}"/>
+                  <div *ngIf="education_step && educationalDetails.controls['highest_qualification'].errors">
+                    <div *ngIf="education['highest_qualification'].errors?.['required']">Highest qualification is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mt-4">
+                  <label class="text-black">Nature  : </label>
+                  <select class="select" [(ngModel)]="contributionEstablishment.nature" [ngModelOptions]="{standalone: true}" >
+                    <option value="None" (click)="autreMoins()">None</option>
+                    <option value="Hébergement" (click)="autreMoins()">Hébergement</option>
+                    <option value="Restauration" (click)="autreMoins()">Restauration</option>
+                    <option value="Pause café" (click)="autreMoins()">Pause café</option>
+                    <option value="Impression de document" (click)="autreMoins()">Impression de document</option>
+                    <option value="Autre" (click)="autrePlus()">Autre</option>
+                  </select>
+                </div>
+                <div *ngIf="stepAutre1==1" class="col-md-6" >
+                  <div class="row">
+                    <div class="col-md-4 mt-3"><label>précisez:</label></div>
+                    <div class="col-md-6">
+                      <input type="text"  [(ngModel)]="contributionEstablishment.nature" [ngModelOptions]="{standalone: true}"  placeholder="Précisez"/>
+                      <div *ngIf="education_step && educationalDetails.controls['highest_qualification'].errors">
+                        <div *ngIf="education['highest_qualification'].errors?.['required']">précisez</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2 offset-10 mb-4">
+                <button class="btn btn-block btn-danger col-md-3 offset-2" (click)="addContributionEstablishment()">+</button>
+              </div>
+
+
+              <table class="table table-bordered table-striped">
+                <thead>
+                <th>Nom d'établissement</th>
+                <th>Montant</th>
+                <th>Nature</th>
+                <th>Action</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let ce of contributionEstablishments;index as i" >
+                  <td>{{ce.establishmentName}}</td>
+                  <td>{{ce.montant}}</td>
+                  <td>{{ce.nature}}</td>
+                  <td><span   ><i class="fa fa-trash btn btn-danger"></i> </span></td>
+                  <td><span   ><i class="fa fa-edit btn btn-warning"></i> </span></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-5" style="background-color: oldlace">
+              <h5 class="text-black">Contribution des Sponsors</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text"  placeholder="Nom d'organisme" [(ngModel)]="contributionSponsor.organisme"  [ngModelOptions]="{standalone: true}"/>
+                  <div *ngIf="education_step && educationalDetails.controls['highest_qualification'].errors">
+                    <div *ngIf="education['highest_qualification'].errors?.['required']">Highest qualification is required</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <input type="text"  placeholder="Montant de contribution" [(ngModel)]="contributionSponsor.montant"  [ngModelOptions]="{standalone: true}"/>
+                  <div *ngIf="education_step && educationalDetails.controls['highest_qualification'].errors">
+                    <div *ngIf="education['highest_qualification'].errors?.['required']">Highest qualification is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mt-4">
+                  <label class="text-black">Nature  : </label>
+                  <select class="select" [(ngModel)]="contributionSponsor.nature"  [ngModelOptions]="{standalone: true}">
+                    <option value="None" (click)="autreMoinsc()">None</option>
+                    <option value="Hébergement" (click)="autreMoinsc()">Hébergement</option>
+                    <option value="Restauration" (click)="autreMoinsc()">Restauration</option>
+                    <option value="Pause café" (click)="autreMoinsc()">Pause café</option>
+                    <option value="Impression de document" (click)="autreMoinsc()">Impression de document</option>
+                    <option value="Autre" (click)="autrePlusc()">Autre</option>
+                  </select>
+                </div>
+                <div *ngIf="stepAutre2==1" class="col-md-6" >
+                  <div class="row">
+                    <div class="col-md-4 mt-3"><label>précisez:</label></div>
+                    <div class="col-md-6">
+                      <input type="text"  [(ngModel)]="contributionSponsor.nature" [ngModelOptions]="{standalone: true}"  placeholder="Précisez"/>
+                      <div *ngIf="education_step && educationalDetails.controls['highest_qualification'].errors">
+                        <div *ngIf="education['highest_qualification'].errors?.['required']">précisez</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2 offset-10 mb-4">
+                <button class="btn btn-block btn-danger col-md-3 offset-2" (click)="addContributionSponsor()">+</button>
+              </div>
+              <table class="table table-bordered table-striped">
+                <thead>
+                <th>Nom d'établissement</th>
+                <th>Montant</th>
+                <th>Nature</th>
+                <th>Action</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let cs of contributionSponsors;index as i" >
+                  <td>{{cs.organisme}}</td>
+                  <td>{{cs.montant}}</td>
+                  <td>{{cs.nature}}</td>
+                  <td><span   ><i class="fa fa-trash btn btn-danger"></i> </span></td>
+                  <td><span   ><i class="fa fa-edit btn btn-warning"></i> </span></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <input (click)="previous()" type="button" style="background-color: #666666" name="previous" class="previous action-button-previous" value="Previous"/>
+            <input  (click)="next()" type="button" style="background-color: #2C3E50" name="next" class="next action-button" value="Next"/>
+            <!-- <input (click)="submit()"type="submit" name="submit" class="submit action-button" value="Submit"/> -->
+          </fieldset>
+        </form>
+
+        <form class="msform">
+          <fieldset *ngIf="step == 4" >
+            <h3 style="font-family: 'Arial Narrow';color: #333333">Les soutiens sollicités de l'université</h3>
+            <div style="background-color: gainsboro">
+              <div class="row">
+                <div class="col-md-9 mt-4">
+                  <label class="text-black">Rubrique  : </label>
+                  <select class="select" [(ngModel)]="soutien.rubrique"  [ngModelOptions]="{standalone: true}">
+                    <option value="1">None</option>
+                    <option value="2">Frais d'impression du proceding, actes, compte rendu</option>
+                    <option value="3">pause Café de la réception (forfait 20Dh/personne)</option>
+                    <option value="4">Repas (forfait 100Dh/personne</option>
+                    <option value="5">Hébergement (forfait 250Dh/nuité</option>
+                    <option value="6">Transport interne (cas de sortie ou travaux sur terrain</option>
+                  </select>
+                </div>
+                <div class="col-md-3 mt-2">
+                  <input type="text" placeholder="nombre" [(ngModel)]="soutien.nombre"  [ngModelOptions]="{standalone: true}"/>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <input type="text" placeholder="montant" [(ngModel)]="soutien.montant"  [ngModelOptions]="{standalone: true}"/>
+
+                </div>
+                <div class="col-md-9">
+                  <input type="text" placeholder="remarque" [(ngModel)]="soutien.remarqueUser"  [ngModelOptions]="{standalone: true}"/>
+
+                </div>
+              </div>
+              <div class="col-md-2 offset-10 mt-3">
+                <button class="btn btn-block btn-danger" (click)="addSoutien()">Ajouter</button>
+              </div>
+              <table class="table table-responsive-md table-striped mt-4 table-bordered" style="background-color: oldlace">
+                <thead>
+                <th>Rubrique</th>
+                <th>Nombre</th>
+                <th>Montant</th>
+                <th>Remarque</th>
+                <th>Action</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let s of soutiens;index as i">
+                  <td>{{s.rubrique}}</td>
+                  <td>{{s.nombre}}</td>
+                  <td>{{s.montant}}</td>
+                  <td>{{s.remarqueUser}}</td>
+                  <td><span   ><i class="fa fa-trash btn btn-danger"></i> </span></td>
+                  <td><span   ><i class="fa fa-edit btn btn-warning"></i> </span></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <input (click)="previous()" style="background-color: #666666" type="button" name="previous" class="previous action-button-previous" value="Précédent"/>
+            <input (click)="submit()"type="submit" style="background-color: #2C3E50" name="submit" class="submit action-button" value="Modifier"/>
+            <fieldset  *ngIf="stepp == 1" >
+              <label>vous pouvez imprimer la nouvelle fiche de votre demande</label>
+              <input (click)="print()" style="background-color: darkred"   type="submit" name="print" class="submit action-button" value="imprimer"/>
+              <a *ngIf="steptelechargement == 2" href="#">Télécharger pdf</a>
+            </fieldset>
+          </fieldset>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
