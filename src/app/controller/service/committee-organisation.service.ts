@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {CommitteeOrganisation} from "../model/committee-organisation.model";
+import {Demande} from "../model/demande.model";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +11,20 @@ export class CommitteeOrganisationService {
   private _committeeOrganisations= new Array<CommitteeOrganisation>();
   private _index:number;
 
-  constructor() { }
+  constructor(private http:HttpClient,) { }
 
-
+  public  getListcommitteeOrganisation(reference:String)
+  {
+    this.http.get<Array<CommitteeOrganisation>>("http://localhost:8070/api/v1/committeeOrg/reference/"+ reference).subscribe(
+      data=>{
+        this.committeeOrganisations=data
+        console.log('commmmm bien');
+        console.log(data);
+      } ,error=>{
+        console.log(error)
+      }
+    )
+  }
   get committeeOrganisation(): CommitteeOrganisation {
     if (this._committeeOrganisation==null){
       this._committeeOrganisation=new CommitteeOrganisation();

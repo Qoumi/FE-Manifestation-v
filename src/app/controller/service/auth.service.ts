@@ -38,7 +38,7 @@ export class AuthService {
         jwt != null ? this.tokenService.saveToken(jwt) : false;
         this.loadInfos();
         console.log('you are logged in successfully');
-        this.router.navigate(['/encours']);
+        this.router.navigate(['/user-space/demandes']);
       }, (error: HttpErrorResponse) => {
         this.error = error.error;
         console.log(error);

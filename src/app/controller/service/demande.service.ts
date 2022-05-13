@@ -5,6 +5,11 @@ import {HttpClient} from "@angular/common/http";
 import {Commande} from "../model/commande.model";
 import {Router} from "@angular/router";
 import {Manifestation} from "../model/manifestation.model";
+import {CommitteeOrganisation} from "../model/committee-organisation.model";
+import {CommitteeOrganisationService} from "./committee-organisation.service";
+import {ContributionSponsorService} from "./contribution-sponsor.service";
+import {ContributionEstablishmentService} from "./contribution-establishment.service";
+import {ContributionParticipantService} from "./contribution-participant.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +21,7 @@ export class DemandeService {
   private _demandes:Array<Demande>;
   private cmpRefDemande:number=24124;
   reference:String;
-  constructor(private manifestationService:ManifestationService,private http:HttpClient,private router:Router) { }
+  constructor(private contributionParticipantService:ContributionParticipantService,private contributionEstablishmentService:ContributionEstablishmentService,private contributionSponsorService:ContributionSponsorService ,private committeeOrganisationService:CommitteeOrganisationService,private manifestationService:ManifestationService,private http:HttpClient,private router:Router) { }
 
   public  getListDemandes()
   {
@@ -32,6 +37,10 @@ export class DemandeService {
   }
   public  getDetails()
   {
+    this.contributionParticipantService.getListContributionParticipants(this.reference)
+    this.contributionEstablishmentService.getListContributionEstablishments(this.reference);
+    this.contributionSponsorService.getContributionSponsors(this.reference);
+    this.committeeOrganisationService.getListcommitteeOrganisation(this.reference);
     this.http.get<Demande>("http://localhost:8070/api/v1/demande/reference/"+ this.reference).subscribe(
       data=>{
         this.demande=data
