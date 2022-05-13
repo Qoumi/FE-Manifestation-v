@@ -1,1 +1,104 @@
-<p>demande-en-cours works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+</head>
+<body>
+
+<div class="sidebar">
+  <input type="checkbox" id="sidebar-toggle">
+  <h3 class="brand">
+    <span class="fas fa-database m-3"></span>
+    <span>ADMIN</span>
+  </h3>
+
+  <div class="sidebar-menu">
+    <ul>
+      <li class="clik" (click)="demandeEncours()" >
+        <a   >
+          <span class="fas fa-home"></span>
+          <span>Historique</span>
+        </a>
+      </li>
+      <li (click)="history()">
+        <a >
+          <span class="fas fa-universal-access"></span>
+          <span>Recents demandes</span>
+        </a>
+      </li>
+      <li>
+        <a href="">
+          <span class="fas fa-database"></span>
+          <span>Account</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="main-content">
+
+  <header>
+    <div class="search-wrapper">
+      <i class="fas fa-search"></i>
+      <input type="search" placeholder="Search" >
+    </div>
+    <div class="souso">Soukaina Qoumi</div>
+    <div class="social-icons">
+      <div></div>
+    </div>
+  </header>
+
+  <main>
+
+    <h2 class="dash-title">historique</h2>
+
+    <section class="recent">
+      <div class="activity-grid">
+        <div class="activity-card">
+          <h3>Nouvelle Demandes</h3>
+
+          <div class="table-responsive ">
+            <table>
+              <thead>
+              <tr >
+                <th>Intitulé de la manifestation</th>
+                <th>La reference de la demande</th>
+                <th>Date de creation</th>
+                <th>etat</th>
+                <th>option</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c  of demandeService.demandes ">
+                <!--<tr *ngFor=" let c of hores | filter:userFilter.name">
+                  <td *ngIf="(hores | filter: userFilter.name).length === 0">No matching elements</td>
+                  <td>{{c.name}}</td>
+                  -->
+                <td>{{c.manifestation.name}}</td>
+                <td class="td-team">
+                  <div>{{c.ref}}</div>
+                </td>
+                <td>{{c.createdAt}}</td>
+                <td>{{c.etat}}</td>
+                <td>
+                  <button class="btn btn-dark p-1"  (click)="details(c.ref) ">details</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+</body>
+</html>

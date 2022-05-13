@@ -2,20 +2,67 @@ import { Injectable } from '@angular/core';
 import {Demande} from "../model/demande.model";
 import {ManifestationService} from "./manifestation.service";
 import {HttpClient} from "@angular/common/http";
+import {Commande} from "../model/commande.model";
+import {Router} from "@angular/router";
+import {Manifestation} from "../model/manifestation.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DemandeService {
-  private _demande:Demande=new Demande();
+  private _demande:Demande;
   private urlBase = 'http://localhost:8070'
   private url = '/api/v1/demande'
   private _demandes:Array<Demande>;
+  private cmpRefDemande:number=24124;
+  reference:String;
+  constructor(private manifestationService:ManifestationService,private http:HttpClient,private router:Router) { }
 
-  constructor(private manifestationService:ManifestationService,private http:HttpClient) { }
+  public  getListDemandes()
+  {
+    this.http.get<Array<Demande>>("http://localhost:8070/api/v1/demande/").subscribe(
+      data=>{
+        this.demandes=data
+        console.log(data)
+      } ,error=>{
+        console.log(error)
+      }
+    )
 
-
+  }
+  public  getDetails()
+  {
+    this.http.get<Demande>("http://localhost:8070/api/v1/demande/reference/"+ this.reference).subscribe(
+      data=>{
+        this.demande=data
+        console.log('details bien');
+        console.log(this.demande.id);
+        console.log(data);
+        this.details();
+      } ,error=>{
+        console.log(error)
+      }
+    )
+  }
+  public details()
+  {
+    console.log(this.reference);
+    this.router.navigate(['/details1']);
+  }
+  public history()
+  {
+    console.log('you are in recent demandes ');
+    this.router.navigate(['/history']);
+  }
+  public demandeEncours()
+  {
+    console.log('you are in recent demandes ');
+    this.router.navigate(['/encours']);
+  }
   get demandes(): Array<Demande> {
+    if (this._demandes== null) {
+      this._demandes = new Array<Demande>();
+    }
     return this._demandes;
   }
 
@@ -27,7 +74,6 @@ export class DemandeService {
     if (this._demande==null){
       this._demande=new Demande();
     }
-    this._demande.manifestation=this.manifestationService.manifestation;
     return this._demande;
   }
 
@@ -37,6 +83,9 @@ export class DemandeService {
   public save(){
     //alert(this.demande.manifestation.coordonnateur.firstName);
     //alert(this.demande.manifestation.name);
+    this.cmpRefDemande=this.cmpRefDemande++;
+    this.demande.ref="D"+this.cmpRefDemande++;
+    this.demande.etat="en cours de traitement";
     if (this.demande.id==null){
     this.http.post<number>(this.urlBase + this.url + '/', this.demande).subscribe(
     data =>{if(data > 0) {

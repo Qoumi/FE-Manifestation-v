@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-demande-history',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DemandeHistoryComponent implements OnInit {
 
-  constructor() { }
+  constructor( private router:Router) { }
 
   ngOnInit(): void {
   }
-
+  public history()
+  {
+    console.log('you are in recent demandes ');
+    this.router.navigate(['/history']);
+  }
+  public demandeEncours()
+  {
+    console.log('you are in recent demandes ');
+    this.router.navigate(['/encours']);
+  }
 }
