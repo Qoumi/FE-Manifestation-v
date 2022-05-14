@@ -10,6 +10,9 @@ import {CommitteeOrganisationService} from "./committee-organisation.service";
 import {ContributionSponsorService} from "./contribution-sponsor.service";
 import {ContributionEstablishmentService} from "./contribution-establishment.service";
 import {ContributionParticipantService} from "./contribution-participant.service";
+import {ImplicatedEstablishmentService} from "./implicated-establishment.service";
+import {ImplicatedPartnerService} from "./implicated-partner.service";
+import {SoutienService} from "./soutien.service";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +24,15 @@ export class DemandeService {
   private _demandes:Array<Demande>;
   private cmpRefDemande:number=24124;
   reference:String;
-  constructor(private contributionParticipantService:ContributionParticipantService,private contributionEstablishmentService:ContributionEstablishmentService,private contributionSponsorService:ContributionSponsorService ,private committeeOrganisationService:CommitteeOrganisationService,private manifestationService:ManifestationService,private http:HttpClient,private router:Router) { }
+  constructor(private contributionParticipantService:ContributionParticipantService,
+              private contributionEstablishmentService:ContributionEstablishmentService,
+              private contributionSponsorService:ContributionSponsorService ,
+              private committeeOrganisationService:CommitteeOrganisationService,
+              private manifestationService:ManifestationService,
+              private implicatedEstablishmentService:ImplicatedEstablishmentService,
+              private implicatedPartnerService:ImplicatedPartnerService,
+              private soutienService:SoutienService,
+              private http:HttpClient,private router:Router) { }
 
   public  getListDemandes()
   {
@@ -35,26 +46,47 @@ export class DemandeService {
     )
 
   }
+  public update()
+  {
+    this.http.put<number>("http://localhost:8070/api/v1/demande/",this.demande).subscribe(
+      data=>{
+        console.log(data);
+      } ,error=>{
+        console.log(error)
+      }
+    )
+  }
+
+  public changeAccept()
+  {
+    this.demande.etat="la demande accepter";
+  }
+  public changerefuser()
+  {
+    this.demande.etat="demande refuse";
+  }
   public  getDetails()
   {
-    this.contributionParticipantService.getListContributionParticipants(this.reference)
-    this.contributionEstablishmentService.getListContributionEstablishments(this.reference);
-    this.contributionSponsorService.getContributionSponsors(this.reference);
-    this.committeeOrganisationService.getListcommitteeOrganisation(this.reference);
     this.http.get<Demande>("http://localhost:8070/api/v1/demande/reference/"+ this.reference).subscribe(
       data=>{
         this.demande=data
         console.log('details bien');
         console.log(this.demande.id);
         console.log(data);
-        this.details();
+        this.details(this.demande.manifestation.id);
       } ,error=>{
         console.log(error)
       }
     )
   }
-  public details()
-  {
+  public details(id: number)
+  { this.soutienService.getSoutiens(id)
+    this.implicatedEstablishmentService.getImplicatedEstablishments(id)
+    this.implicatedPartnerService.getImplicatedPartners(id)
+    this.contributionParticipantService.getListContributionParticipants(id)
+    this.contributionEstablishmentService.getListContributionEstablishments(id);
+    this.contributionSponsorService.getContributionSponsors(id);
+    this.committeeOrganisationService.getListcommitteeOrganisation(id);
     console.log(this.reference);
     this.router.navigate(['/details1']);
   }
@@ -83,7 +115,6 @@ export class DemandeService {
     if (this._demande==null){
       this._demande=new Demande();
     }
-    this._demande.manifestation=this.manifestationService.manifestation;
     return this._demande;
   }
 
@@ -92,10 +123,9 @@ export class DemandeService {
   }
   public save(){
     //alert(this.demande.manifestation.coordonnateur.firstName);
-
     alert(this.demande.manifestation.name);
-    this.cmpRefDemande=this.cmpRefDemande++;
-    this.demande.ref="D"+this.cmpRefDemande++;
+    this.cmpRefDemande=this.cmpRefDemande+1;
+    this.demande.ref="D"+this.cmpRefDemande;
     this.demande.etat="en cours de traitement";
     if (this.demande.id==null){
     this.http.post<number>(this.urlBase + this.url + '/', this.demande).subscribe(
@@ -104,7 +134,10 @@ export class DemandeService {
       } else {
         alert('error de creation de commande' + data);
       }
-})
+},error=>{
+        console.log(error)
+      }
+)
 }
 
 }

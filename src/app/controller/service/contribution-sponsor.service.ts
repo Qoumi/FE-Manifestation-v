@@ -11,9 +11,9 @@ export class ContributionSponsorService {
   private _contributionSponsors=new Array<ContributionSponsor>();
 
   constructor(private http:HttpClient) { }
- public getContributionSponsors(reference:String)
+ public getContributionSponsors(id:number)
  {
-   this.http.get<Array<ContributionSponsor>>("http://localhost:8070/api/v1/constributionPar/reference/"+ reference).subscribe(
+   this.http.get<Array<ContributionSponsor>>("http://localhost:8070/api/v1/contributionSp/id/"+ id).subscribe(
      data=>{
        this.contributionSponsors=data
        console.log('ContributionParticipant');

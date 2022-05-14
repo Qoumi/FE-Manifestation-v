@@ -13,9 +13,9 @@ export class CommitteeOrganisationService {
 
   constructor(private http:HttpClient,) { }
 
-  public  getListcommitteeOrganisation(reference:String)
+  public  getListcommitteeOrganisation(id:number)
   {
-    this.http.get<Array<CommitteeOrganisation>>("http://localhost:8070/api/v1/committeeOrg/reference/"+ reference).subscribe(
+    this.http.get<Array<CommitteeOrganisation>>("http://localhost:8070/api/v1/committeeOrg/id/"+id).subscribe(
       data=>{
         this.committeeOrganisations=data
         console.log('commmmm bien');

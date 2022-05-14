@@ -13,9 +13,9 @@ export class ContributionParticipantService {
   private _manifestation:Manifestation;
 
   constructor(private http:HttpClient) { }
-  public getListContributionParticipants(reference:String)
+  public getListContributionParticipants(id:number)
   {
-    this.http.get<Array<ContributionParticipant>>("http://localhost:8070/api/v1/constributionPar/reference/"+ reference).subscribe(
+    this.http.get<Array<ContributionParticipant>>("http://localhost:8070/api/v1/constributionPar/id/"+ id).subscribe(
       data=>{
         this.contributionParticipants=data
         console.log('ContributionParticipant');

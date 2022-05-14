@@ -12,9 +12,9 @@ export class ContributionEstablishmentService {
 
   constructor(private http:HttpClient) { }
 
-  public getListContributionEstablishments(reference:String)
+  public getListContributionEstablishments(id:number)
   {
-    this.http.get<Array<ContributionEstablishment>>("http://localhost:8070/api/v1/constributionEst/reference/"+ reference).subscribe(
+    this.http.get<Array<ContributionEstablishment>>("http://localhost:8070/api/v1/constributionEst/id/"+ id).subscribe(
       data=>{
         this.contributionEstablishments=data
         console.log('ContributionEstablishment');

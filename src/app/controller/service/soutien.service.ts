@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Soutien} from "../model/soutien.model";
+import {ImplicatedPartner} from "../model/implicated-partner.model";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +9,19 @@ import {Soutien} from "../model/soutien.model";
 export class SoutienService {
 private _soutien:Soutien;
 private _soutiens=new Array<Soutien>();
-  constructor() { }
-
+  constructor(private http:HttpClient) { }
+  public getSoutiens(id:number)
+  {
+    this.http.get<Array<Soutien>>("http://localhost:8070/api/v1/soutien/id/"+ id).subscribe(
+      data=>{
+        this.soutiens=data
+        console.log('sotien');
+        console.log(data);
+      } ,error=>{
+        console.log(error)
+      }
+    )
+  }
   get soutien(): Soutien {
     if (this._soutien==null){
       this._soutien=new Soutien();
