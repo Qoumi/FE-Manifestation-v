@@ -15,7 +15,7 @@ import {ContributionParticipantService} from "./contribution-participant.service
   providedIn: 'root'
 })
 export class DemandeService {
-  private _demande:Demande;
+  private _demande:Demande=new Demande();
   private urlBase = 'http://localhost:8070'
   private url = '/api/v1/demande'
   private _demandes:Array<Demande>;
@@ -83,6 +83,7 @@ export class DemandeService {
     if (this._demande==null){
       this._demande=new Demande();
     }
+    this._demande.manifestation=this.manifestationService.manifestation;
     return this._demande;
   }
 
@@ -91,7 +92,8 @@ export class DemandeService {
   }
   public save(){
     //alert(this.demande.manifestation.coordonnateur.firstName);
-    //alert(this.demande.manifestation.name);
+
+    alert(this.demande.manifestation.name);
     this.cmpRefDemande=this.cmpRefDemande++;
     this.demande.ref="D"+this.cmpRefDemande++;
     this.demande.etat="en cours de traitement";
