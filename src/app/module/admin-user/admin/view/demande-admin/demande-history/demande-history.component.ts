@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {DemandeService} from "../../../../../../controller/service/demande.service";
 
 @Component({
   selector: 'app-demande-history',
@@ -8,18 +9,31 @@ import {Router} from "@angular/router";
 })
 export class DemandeHistoryComponent implements OnInit {
 
-  constructor( private router:Router) { }
+  constructor( public  demandeService:DemandeService) { }
 
   ngOnInit(): void {
+    this.getListDemandesAccepter()
+    this.getListDemandesrefuser()
+  }
+  public getListDemandesrefuser()
+  {
+    this.demandeService.getListDemandesrefuser()
+  }
+  public getListDemandesAccepter()
+  {
+    this.demandeService.getListDemandesAccepter();
+  }
+  public details(ref:String)
+  {
+    this.demandeService.reference=ref;
+    this.demandeService.getDetails();
   }
   public history()
   {
-    console.log('you are in recent demandes ');
-    this.router.navigate(['/history']);
+    this.demandeService.history();
   }
   public demandeEncours()
   {
-    console.log('you are in recent demandes ');
-    this.router.navigate(['/encours']);
+    this.demandeService.demandeEncours();
   }
 }

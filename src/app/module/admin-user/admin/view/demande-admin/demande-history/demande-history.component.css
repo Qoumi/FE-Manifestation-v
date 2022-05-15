@@ -14,7 +14,11 @@
   list-style-type: none;
   box-sizing: border-box;
 }
-
+.td-team {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
 #sidebar-toggle {
   display: none;
 }

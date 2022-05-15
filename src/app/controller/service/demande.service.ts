@@ -36,9 +36,36 @@ export class DemandeService {
 
   public  getListDemandes()
   {
-    this.http.get<Array<Demande>>("http://localhost:8070/api/v1/demande/").subscribe(
+    this.http.get<Array<Demande>>("http://localhost:8070/api/v1/demande/refetate/en cours de traitement").subscribe(
       data=>{
         this.demandes=data
+        console.log(data)
+      } ,error=>{
+        console.log(error)
+      }
+    )
+
+  }
+  public  getListDemandesAccepter()
+  {
+    this.http.get<Array<Demande>>("http://localhost:8070/api/v1/demande/refetate/la demande accepter").subscribe(
+      data=>{
+        this.demandes=data
+        console.log(data)
+      } ,error=>{
+        console.log(error)
+      }
+    )
+
+  }
+  public  getListDemandesrefuser()
+  {
+    this.http.get<Array<Demande>>("http://localhost:8070/api/v1/demande/refetate/demande refuse").subscribe(
+      data=>{
+        for (let demande of data)
+        {
+          this.demandes.push(demande)
+        }
         console.log(data)
       } ,error=>{
         console.log(error)
@@ -59,10 +86,12 @@ export class DemandeService {
 
   public changeAccept()
   {
+    alert('la demande est accepte')
     this.demande.etat="la demande accepter";
   }
   public changerefuser()
   {
+    alert('la demande est refuse')
     this.demande.etat="demande refuse";
   }
   public  getDetails()
@@ -87,6 +116,7 @@ export class DemandeService {
     this.contributionEstablishmentService.getListContributionEstablishments(id);
     this.contributionSponsorService.getContributionSponsors(id);
     this.committeeOrganisationService.getListcommitteeOrganisation(id);
+
     console.log(this.reference);
     this.router.navigate(['/details1']);
   }
