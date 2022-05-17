@@ -38,7 +38,9 @@ export class AuthService {
         jwt != null ? this.tokenService.saveToken(jwt) : false;
         this.loadInfos();
         console.log('you are logged in successfully');
-        for (let role of this.authenticatedUser.roles)
+       // this.router.navigate(['/user-space/demandes']);
+        this.router.navigate(['/encours']);
+      /*  for (let role of this.authenticatedUser.authorities)
         {
           if(role=='ROLE_ADMIN')
           {
@@ -51,7 +53,7 @@ export class AuthService {
           {
             console.log('error admin');
           }
-        }
+        } */
 
       }, (error: HttpErrorResponse) => {
         this.error = error.error;
