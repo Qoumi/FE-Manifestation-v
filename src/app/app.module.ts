@@ -30,9 +30,11 @@ import {DemandeUserComponent} from "./module/admin-user/user/view/demande-user/d
 import {DemandeListComponent} from "./module/admin-user/user/view/demande-user/demande-list/demande-list.component";
 import { NavbarComponent } from './module/admin-user/user/view/navbar/navbar.component';
 import { SidebarComponent } from './module/admin-user/user/view/sidebar/sidebar.component';
-import { DemandeDetailsComponent } from './module/admin-user/user/view/demande-user/demande-details/demande-details.component';
+import {DemandeDetailsComponent} from "./module/admin-user/user/view/demande-user/demande-details/demande-details.component";
+import { DemandeDetails1Component } from './module/admin-user/admin/view/demande-admin/demande-details1/demande-details1.component';
 import { DemandeEditComponent } from './module/admin-user/user/view/demande-user/demande-edit/demande-edit.component';
-
+import {RouterModule} from "@angular/router";
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,15 +55,24 @@ import { DemandeEditComponent } from './module/admin-user/user/view/demande-user
     NavbarComponent,
     SidebarComponent,
     DemandeDetailsComponent,
-    DemandeEditComponent
+    DemandeEditComponent,
+    DemandeDetails1Component,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    Ng2SearchPipeModule,
     AppRoutingModule,
     UserRoutingModule,
+    RouterModule.forRoot([
+      { path: 'encours', component: DemandeEnCoursComponent },
+      { path: 'history', component: DemandeHistoryComponent },
+      { path: 'details1', component: DemandeDetails1Component },
+
+
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

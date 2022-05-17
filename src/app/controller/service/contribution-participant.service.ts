@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {ContributionParticipant} from "../model/contribution-participant.model";
 import {Manifestation} from "../model/manifestation.model";
+import {HttpClient} from "@angular/common/http";
+import {ContributionEstablishment} from "../model/contribution-establishment.model";
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,19 @@ export class ContributionParticipantService {
   private _contributionParticipants=new Array<ContributionParticipant>();
   private _manifestation:Manifestation;
 
-  constructor() { }
-
+  constructor(private http:HttpClient) { }
+  public getListContributionParticipants(id:number)
+  {
+    this.http.get<Array<ContributionParticipant>>("http://localhost:8070/api/v1/constributionPar/id/"+ id).subscribe(
+      data=>{
+        this.contributionParticipants=data
+        console.log('ContributionParticipant');
+        console.log(data);
+      } ,error=>{
+        console.log(error)
+      }
+    )
+  }
 
   get manifestation(): Manifestation {
     if (this._manifestation==null){

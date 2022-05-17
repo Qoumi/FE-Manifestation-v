@@ -4,6 +4,7 @@ import {Manifestation} from "../model/manifestation.model";
 import {ImplicatedPartner} from "../model/implicated-partner.model";
 import {EntityOrganisationService} from "./entity-organisation.service";
 import {CoordonnateurService} from "./coordonnateur.service";
+import {CommitteeOrganisationService} from "./committee-organisation.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ManifestationService {
   private _manifestation:Manifestation;
   private _index: number;
 
-  constructor(private entityOrganisationService:EntityOrganisationService,private coordonnateurService:CoordonnateurService) { }
+  constructor(private committeeOrganisationService:CommitteeOrganisationService,private entityOrganisationService:EntityOrganisationService,private coordonnateurService:CoordonnateurService) { }
 
   public addImplicatedPartner() {
     this.implicatedPartners.push({...this.implicatedPartner});

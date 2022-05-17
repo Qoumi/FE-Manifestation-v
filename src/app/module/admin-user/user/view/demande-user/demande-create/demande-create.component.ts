@@ -115,6 +115,7 @@ export class DemandeCreateComponent implements OnInit {
 
   public save(){
     //alert(this.manifestation.implicatedPartners.forEach(e=>e.name));
+
     this.demandeService.save()
   }
 
@@ -210,16 +211,10 @@ export class DemandeCreateComponent implements OnInit {
     }
 
   }
-  getDemande(){
-    this.demandeService.getDemande();
-  }
-  printReport(){
-    this.demandeService.print();
-  }
 
   submit(){
-   this.save();
-   // this.getDemande();
+    this.demandeService.demande.manifestation=this.manifestationService.manifestation
+    this.save();
     this.stepp=1;
     if(this.step==4){
       this.soutien_step = true;

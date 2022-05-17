@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ContributionEstablishment} from "../model/contribution-establishment.model";
+import {CommitteeOrganisation} from "../model/committee-organisation.model";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +10,20 @@ export class ContributionEstablishmentService {
   private _contributionEstablishment:ContributionEstablishment;
   private _contributionEstablishments=new Array<ContributionEstablishment>();
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
+  public getListContributionEstablishments(id:number)
+  {
+    this.http.get<Array<ContributionEstablishment>>("http://localhost:8070/api/v1/constributionEst/id/"+ id).subscribe(
+      data=>{
+        this.contributionEstablishments=data
+        console.log('ContributionEstablishment');
+        console.log(data);
+      } ,error=>{
+        console.log(error)
+      }
+    )
+  }
   get contributionEstablishment(): ContributionEstablishment {
     if (this._contributionEstablishment==null){
       this._contributionEstablishment=new ContributionEstablishment();

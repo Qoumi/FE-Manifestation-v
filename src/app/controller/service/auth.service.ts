@@ -23,7 +23,7 @@ export class AuthService {
     this._authenticated = value;
   }
   public error: string = null;
-  readonly API = 'http://localhost:8070/';
+  readonly API = 'http://localhost:8031/';
   private _authenticatedUser = new User();
   private _authenticated = <boolean>JSON.parse(localStorage.getItem('autenticated')) || false;
   public _loggedIn = new BehaviorSubject<boolean>(false);
@@ -38,7 +38,7 @@ export class AuthService {
         jwt != null ? this.tokenService.saveToken(jwt) : false;
         this.loadInfos();
         console.log('you are logged in successfully');
-        this.router.navigate(['/user-space/demandes']);
+        this.router.navigate(['/encours']);
       }, (error: HttpErrorResponse) => {
         this.error = error.error;
         console.log(error);
@@ -49,7 +49,7 @@ export class AuthService {
   public loadInfos() {
     const tokenDecoded = this.tokenService.decode();
     const username = tokenDecoded.sub;
-    const authorities = tokenDecoded.roles;
+    const roles = tokenDecoded.roles;
     const email = tokenDecoded.email;
     const prenom = tokenDecoded.prenom;
     const nom = tokenDecoded.nom;
@@ -59,7 +59,7 @@ export class AuthService {
     this._authenticatedUser.nom = nom;
     this._authenticatedUser.prenom = prenom;
     this._authenticatedUser.email = email;
-    this._authenticatedUser.authorities = authorities;
+    this._authenticatedUser.roles = roles;
     localStorage.setItem('autenticated', JSON.stringify(true));
     this.authenticated = true;
     this._loggedIn.next(true);

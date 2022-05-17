@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ContributionSponsor} from "../model/contribution-sponsor.model";
+import {HttpClient} from "@angular/common/http";
+import {ContributionParticipant} from "../model/contribution-participant.model";
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +10,19 @@ export class ContributionSponsorService {
   private _contributionSponsor:ContributionSponsor;
   private _contributionSponsors=new Array<ContributionSponsor>();
 
-  constructor() { }
-
+  constructor(private http:HttpClient) { }
+ public getContributionSponsors(id:number)
+ {
+   this.http.get<Array<ContributionSponsor>>("http://localhost:8070/api/v1/contributionSp/id/"+ id).subscribe(
+     data=>{
+       this.contributionSponsors=data
+       console.log('ContributionParticipant');
+       console.log(data);
+     } ,error=>{
+       console.log(error)
+     }
+   )
+ }
   get contributionSponsor(): ContributionSponsor {
     if (this._contributionSponsor==null){
       this._contributionSponsor=new ContributionSponsor();
