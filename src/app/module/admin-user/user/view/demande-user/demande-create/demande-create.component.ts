@@ -210,9 +210,16 @@ export class DemandeCreateComponent implements OnInit {
     }
 
   }
+  getDemande(){
+    this.demandeService.getDemande();
+  }
+  printReport(){
+    this.demandeService.print();
+  }
 
   submit(){
-    this.save();
+   this.save();
+   // this.getDemande();
     this.stepp=1;
     if(this.step==4){
       this.soutien_step = true;

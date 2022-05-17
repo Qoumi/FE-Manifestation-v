@@ -10,7 +10,9 @@ export class DemandeService {
   private _demande:Demande=new Demande();
   private urlBase = 'http://localhost:8070'
   private url = '/api/v1/demande'
+  private urlprint = '/api/v1/report'
   private _demandes:Array<Demande>;
+  private isSaveValidated:Boolean;
 
   constructor(private manifestationService:ManifestationService,private http:HttpClient) { }
 
@@ -35,17 +37,27 @@ export class DemandeService {
     this._demande = value;
   }
   public save(){
-    //alert(this.demande.manifestation.coordonnateur.firstName);
-    //alert(this.demande.manifestation.name);
     if (this.demande.id==null){
     this.http.post<number>(this.urlBase + this.url + '/', this.demande).subscribe(
     data =>{if(data > 0) {
+      this.isSaveValidated=true;
       this.demandes.push({...this.demande});
       } else {
-        alert('error de creation de commande' + data);
+      this.isSaveValidated=false;
+        alert('erreur de sauvegarde de votre demande, vérifiez les données saisies!');
       }
 })
 }
 
 }
+public getDemande() {
+  this.http.post(this.urlBase + this.url + '/getDemande', this.demande).subscribe();
+}
+public print(){
+    if (this.isSaveValidated) {
+      this.http.get(this.urlBase + this.urlprint + '/generate').subscribe();
+    }
+    else{ alert("votre demande n'a pas été validé")}
+}
+
 }

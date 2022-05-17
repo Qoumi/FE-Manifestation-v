@@ -58,8 +58,8 @@
       <div class="p-field col-md-4">
         <label for="5">Etendue</label>
         <input  type="text" pInputText [disabled]="true"
-                placeholder="etendue"  [(ngModel)]="manifestation.etentue"
-                id="5" [(ngModel)]="manifestation.etentue"
+                placeholder="etendue"  [(ngModel)]="manifestation.etendue"
+                id="5" [(ngModel)]="manifestation.etendue"
                 autofocus>
       </div>
       <div class="p-field  col-md-4">
@@ -91,7 +91,7 @@
     <div class="p-field col-md-3">
       <label>Nom coordonnateur</label>
       <input type="text" pInputText [disabled]="true"
-             placeholder="nom"  [(ngModel)]="manifestation.coordonnateur.lasttName"
+             placeholder="nom"  [(ngModel)]="manifestation.coordonnateur.lastName"
              [(ngModel)]="manifestation.lieu"
              autofocus>
     </div>
@@ -116,7 +116,7 @@
       <label >Email</label>
       <input  type="text" pInputText [disabled]="true"
               placeholder="email"  [(ngModel)]="manifestation.coordonnateur.email"
-             [(ngModel)]="manifestation.etentue"
+             [(ngModel)]="manifestation.etendue"
               autofocus>
     </div>
     <div class="p-field  col-md-4">
@@ -143,7 +143,7 @@
       <label >Nom d'entité d'organisation</label>
       <input  type="text" pInputText [disabled]="true"
               placeholder="nom d'entité"  [(ngModel)]="manifestation.entityOrganisation.name"
-              [(ngModel)]="manifestation.etentue"
+              [(ngModel)]="manifestation.etendue"
               autofocus>
     </div>
     <div class="p-field  col-md-4">

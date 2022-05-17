@@ -16,6 +16,6 @@ export class User {
   public confirmPassword: string;
   public  createdAt: Date;
   public  updatedAt: Date;
-  public roles: any = [];
+  public authorities: any = [];
   public demandes=new Array<Demande>();
 }

@@ -41,7 +41,7 @@
 
           <div class="row">
             <div class="col-md-4">
-            <input  type="text" [(ngModel)]="manifestation.etentue" [ngModelOptions]="{standalone: true}"
+            <input  type="text" [(ngModel)]="manifestation.etendue" [ngModelOptions]="{standalone: true}"
                     [ngClass]="{ 'is-invalid': personal_step && personal['name'].errors }" placeholder="Etendue"/>
             <div *ngIf="personal_step && personalDetails.controls['name'].errors">
               <div *ngIf="personal['name'].errors?.['required']">Name is required</div>
@@ -174,7 +174,7 @@
                     <h5 style="color: black">Coordonnateur de la manifestation</h5>
                     <div class="row">
                       <div class="col-md-4">
-                  <input type="text" [(ngModel)]="coordonnateur.lasttName"  placeholder="Nom" [ngModelOptions]="{standalone: true}"/>
+                  <input type="text" [(ngModel)]="coordonnateur.lastName"  placeholder="Nom" [ngModelOptions]="{standalone: true}"/>
                           <div *ngIf="address_step && addressDetails.controls['lastName'].errors">
                             <div *ngIf="address['lastName'].errors?.['required']">Pincode is required</div>
                           </div>
@@ -570,7 +570,7 @@
           <fieldset  *ngIf="stepp == 1" >
             <label>Maintenant vous pouvez imprimer la fiche de votre demande</label>
             <input (click)="print()" style="background-color: darkred"   type="submit" name="print" class="submit action-button" value="imprimer"/>
-           <a *ngIf="steptelechargement == 2" href="#">Télécharger pdf</a>
+           <a *ngIf="steptelechargement == 2" (click)="printReport()" href="http://localhost:8070/api/v1/report/generate">Télécharger pdf</a>
           </fieldset>
         </fieldset>
       </form>

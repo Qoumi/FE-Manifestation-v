@@ -1,6 +1,6 @@
 export class Coordonnateur {
   firstName:String;
-  lasttName:String;
+  lastName:String;
   grade:String;
   establishmentName:String;
   email:String;
