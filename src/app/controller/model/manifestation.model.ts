@@ -12,7 +12,7 @@ export class Manifestation {
   public id: number;
   public name: String;
   public ref: String;
-  public etentue: String;
+  public etendue: String;
   public dateStart: Date;
   public dateEnd: Date;
   public lieu: String;

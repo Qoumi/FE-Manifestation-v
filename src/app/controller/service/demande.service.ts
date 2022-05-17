@@ -21,8 +21,10 @@ export class DemandeService {
   private _demande:Demande;
   private urlBase = 'http://localhost:8070'
   private url = '/api/v1/demande'
+  private urlprint = '/api/v1/report'
   private _demandes:Array<Demande>;
-  private cmpRefDemande:number=24125;
+  private isSaveValidated:Boolean;
+  private cmpRefDemande:number=1000;
   reference:String;
   constructor(private contributionParticipantService:ContributionParticipantService,
               private contributionEstablishmentService:ContributionEstablishmentService,
@@ -154,15 +156,17 @@ export class DemandeService {
   }
   public save(){
     //alert(this.demande.manifestation.coordonnateur.firstName);
-    alert(this.demande.manifestation.name);
+    //alert(this.demande.manifestation.name);
     this.cmpRefDemande=this.cmpRefDemande+1;
     this.demande.ref="D"+this.cmpRefDemande;
     this.demande.etat="en cours de traitement";
     if (this.demande.id==null){
     this.http.post<number>(this.urlBase + this.url + '/', this.demande).subscribe(
     data =>{if(data > 0) {
+      this.isSaveValidated=true;
       this.demandes.push({...this.demande});
       } else {
+      this.isSaveValidated=false;
         alert('error de creation de commande' + data);
       }
 },error=>{
@@ -172,4 +176,13 @@ export class DemandeService {
 }
 
 }
+  public getDemande() {
+    this.http.post(this.urlBase + this.url + '/getDemande', this.demande).subscribe();
+  }
+  public print(){
+    if (this.isSaveValidated) {
+      this.http.get(this.urlBase + this.urlprint + '/generate').subscribe();
+    }
+    else{ alert("votre demande n'a pas été validé")}
+  }
 }

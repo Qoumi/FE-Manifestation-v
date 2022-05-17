@@ -23,7 +23,7 @@ export class AuthService {
     this._authenticated = value;
   }
   public error: string = null;
-  readonly API = 'http://localhost:8031/';
+  readonly API = 'http://localhost:8070/';
   private _authenticatedUser = new User();
   private _authenticated = <boolean>JSON.parse(localStorage.getItem('autenticated')) || false;
   public _loggedIn = new BehaviorSubject<boolean>(false);
@@ -49,7 +49,7 @@ export class AuthService {
   public loadInfos() {
     const tokenDecoded = this.tokenService.decode();
     const username = tokenDecoded.sub;
-    const roles = tokenDecoded.roles;
+    const authorities = tokenDecoded.roles;
     const email = tokenDecoded.email;
     const prenom = tokenDecoded.prenom;
     const nom = tokenDecoded.nom;
@@ -59,7 +59,7 @@ export class AuthService {
     this._authenticatedUser.nom = nom;
     this._authenticatedUser.prenom = prenom;
     this._authenticatedUser.email = email;
-    this._authenticatedUser.roles = roles;
+    this._authenticatedUser.authorities = authorities;
     localStorage.setItem('autenticated', JSON.stringify(true));
     this.authenticated = true;
     this._loggedIn.next(true);
