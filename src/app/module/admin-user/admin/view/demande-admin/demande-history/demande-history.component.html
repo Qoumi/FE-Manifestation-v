@@ -26,13 +26,7 @@
       <li class="clik" (click)="history()">
         <a>
           <span class="fas fa-universal-access"></span>
-          <span>Recents demandes</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <span class="fas fa-database"></span>
-          <span>Account</span>
+          <span>Récents demandés</span>
         </a>
       </li>
     </ul>
@@ -45,7 +39,7 @@
   <header>
     <div class="search-wrapper">
       <i class="fas fa-search"></i>
-      <input type="search" placeholder="Search">
+      <input type="search" placeholder="Search" [(ngModel)]="term">
     </div>
     <div class="souso">Soukaina Qoumi</div>
     <div class="social-icons">
@@ -60,7 +54,7 @@
     <section class="recent">
       <div class="activity-grid">
         <div class="activity-card">
-          <h3>recent Demandes</h3>
+          <h3>récents demandés</h3>
 
           <div class="table-responsive ">
             <table>
@@ -74,7 +68,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let c  of demandeService.demandes ">
+              <tr *ngFor="let c  of demandeService.demandes|filter: term">
                 <!--<tr *ngFor=" let c of hores | filter:userFilter.name">
                   <td *ngIf="(hores | filter: userFilter.name).length === 0">No matching elements</td>
                   <td>{{c.name}}</td>
@@ -84,7 +78,7 @@
                   <div>{{c.ref}}</div>
                 </td>
                 <td>{{c.createdAt}}</td>
-                <td><span *ngIf="c.etat=='la demande accepter'" class="badge success">{{c.etat}}</span><span *ngIf="c.etat=='demande refuse'" class="badge warning" >{{c.etat}}</span></td>
+                <td><span *ngIf="c.etat=='la demande accept'" class="badge success">{{c.etat}}</span><span *ngIf="c.etat=='la demande est refusée'" class="badge warning" >{{c.etat}}</span></td>
                 <td>
                   <button class="btn btn-dark p-1"  (click)="details(c.ref) ">details</button>
                 </td>

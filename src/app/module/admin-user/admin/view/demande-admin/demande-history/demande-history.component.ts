@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {DemandeService} from "../../../../../../controller/service/demande.service";
+import {Demande} from "../../../../../../controller/model/demande.model";
 
 @Component({
   selector: 'app-demande-history',
@@ -8,12 +9,11 @@ import {DemandeService} from "../../../../../../controller/service/demande.servi
   styleUrls: ['./demande-history.component.css']
 })
 export class DemandeHistoryComponent implements OnInit {
-
+   term:string
   constructor( public  demandeService:DemandeService) { }
 
   ngOnInit(): void {
     this.getListDemandesAccepter()
-    this.getListDemandesrefuser()
   }
   public getListDemandesrefuser()
   {

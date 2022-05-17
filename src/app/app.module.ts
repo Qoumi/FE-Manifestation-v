@@ -34,6 +34,7 @@ import {DemandeDetailsComponent} from "./module/admin-user/user/view/demande-use
 import { DemandeDetails1Component } from './module/admin-user/admin/view/demande-admin/demande-details1/demande-details1.component';
 import { DemandeEditComponent } from './module/admin-user/user/view/demande-user/demande-edit/demande-edit.component';
 import {RouterModule} from "@angular/router";
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +63,7 @@ import {RouterModule} from "@angular/router";
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    Ng2SearchPipeModule,
     AppRoutingModule,
     UserRoutingModule,
     RouterModule.forRoot([

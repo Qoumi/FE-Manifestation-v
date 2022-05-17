@@ -8,6 +8,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class SoutienService {
 private _soutien:Soutien;
+private _montantGlobal:number;
 private _soutiens=new Array<Soutien>();
   constructor(private http:HttpClient) { }
   public getSoutiens(id:number)
@@ -15,12 +16,30 @@ private _soutiens=new Array<Soutien>();
     this.http.get<Array<Soutien>>("http://localhost:8070/api/v1/soutien/id/"+ id).subscribe(
       data=>{
         this.soutiens=data
+        this.calcMontantGlobale();
         console.log('sotien');
         console.log(data);
       } ,error=>{
         console.log(error)
       }
     )
+  }
+
+  get montantGlobal(): number {
+    return this._montantGlobal;
+  }
+
+  set montantGlobal(value: number) {
+    this._montantGlobal = value;
+  }
+
+  calcMontantGlobale()
+  {
+    this.montantGlobal=0;
+    for(let c of this.soutiens)
+    {
+      this.montantGlobal+=c.montantPropose
+    }
   }
   get soutien(): Soutien {
     if (this._soutien==null){

@@ -18,11 +18,11 @@ import {SoutienService} from "./soutien.service";
   providedIn: 'root'
 })
 export class DemandeService {
-  private _demande:Demande=new Demande();
+  private _demande:Demande;
   private urlBase = 'http://localhost:8070'
   private url = '/api/v1/demande'
   private _demandes:Array<Demande>;
-  private cmpRefDemande:number=24124;
+  private cmpRefDemande:number=24125;
   reference:String;
   constructor(private contributionParticipantService:ContributionParticipantService,
               private contributionEstablishmentService:ContributionEstablishmentService,
@@ -48,9 +48,10 @@ export class DemandeService {
   }
   public  getListDemandesAccepter()
   {
-    this.http.get<Array<Demande>>("http://localhost:8070/api/v1/demande/refetate/la demande accepter").subscribe(
+    this.http.get<Array<Demande>>("http://localhost:8070/api/v1/demande/refetate/la demande accept").subscribe(
       data=>{
         this.demandes=data
+        this.getListDemandesrefuser()
         console.log(data)
       } ,error=>{
         console.log(error)
@@ -60,7 +61,7 @@ export class DemandeService {
   }
   public  getListDemandesrefuser()
   {
-    this.http.get<Array<Demande>>("http://localhost:8070/api/v1/demande/refetate/demande refuse").subscribe(
+    this.http.get<Array<Demande>>("http://localhost:8070/api/v1/demande/refetate/la demande est refusée").subscribe(
       data=>{
         for (let demande of data)
         {
@@ -87,12 +88,12 @@ export class DemandeService {
   public changeAccept()
   {
     alert('la demande est accepte')
-    this.demande.etat="la demande accepter";
+    this.demande.etat="la demande accept";
   }
   public changerefuser()
   {
     alert('la demande est refuse')
-    this.demande.etat="demande refuse";
+    this.demande.etat="la demande est refusée";
   }
   public  getDetails()
   {
