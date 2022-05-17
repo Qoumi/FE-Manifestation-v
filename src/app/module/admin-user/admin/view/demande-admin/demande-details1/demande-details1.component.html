@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+</head>
+<body>
+<div class="main-content">
+
+  <header>
+    <div class="row">
+      <div class="col"><span class="text-danger" style="font-weight: bold">LA REFERENCE DE DEMANDE:</span>  </div>
+      <div class="col">{{demandeService.demande.ref}}</div>
+      <div class="col"><span class="text-danger" style="font-weight: bold">LA DATE DE CREATION:</span>  </div>
+      <div class="col">{{demandeService.demande.createdAt}}</div>
+    </div>
+  </header>
+
+  <main>
+    <h2 class="dash-title">details</h2>
+
+    <section class="recent">
+      <div class="activity-grid">
+        <div class="activity-card">
+          <div class="titre">
+            <h4 class="m-2">Expéditeur du demande :</h4>
+          </div>
+          <div class="ms-5">
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span> NOM:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{authenticatedUser.username}}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>PRENOM:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{authenticatedUser.prenom}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>GMAIL:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{authenticatedUser.email}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Informations concernant la manifestation</h4>
+          </div>
+          <div class="ms-5">
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>Intitulé de la manifestation:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.name}}</div>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span> LIEU:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.lieu}}</div>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>Site Web de la manifestation:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.siteWeb}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>DATE DE DEBUT:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.dateStart}}</div>
+                  </div>
+                </div>
+
+                <div class="row ">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>DATE DE FIN:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.dateEnd}}</div>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>Nombre de participants prévus:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.nbrParticipantPrevu}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ms-5">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="card-body p-2 border-top">
+                  <span>Etablissement(s) de l’UCAM impliqué(s) dans l’organisation:</span>
+                </div>
+              </div>
+              <div class="col-sm-3 border-top">
+                <div class="p-2" *ngFor="let c of implicatedEstablishmentService.implicatedEstablishments">{{c.name}}</div>
+             </div>
+              <div class="col-sm-3">
+                <div class="card-body p-2 border-top">
+                  <span>Partenaire(s) impliqué(s)</span>
+                </div>
+              </div>
+              <div class="col-sm-3 border-top">
+                <div class="p-2" *ngFor="let c of implicatedPartnerService.implicatedPartnerServices">{{c.name}}</div>
+
+              </div>
+            </div>
+          </div>
+          <div class="row border-top ms-5">
+            <div class="col-sm-3 " > <div class="card-body p-2 ">
+              <span class="text-danger">MONTANT GLOBALE</span>
+            </div></div>
+            <div class="col-sm-3 p-2" > {{soutienService.montantGlobal}}DH </div>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Entité de recherche organisant la manifestation :</h4>
+          </div>
+          <div class="ms-5">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="card-body p-2">
+                  <span>Nom de l’entité de recherche:</span>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class=" p-2">
+                  {{demandeService.demande.manifestation.entityOrganisation.name}}
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="card-body p-2">
+                  <span>Responsable de l’entité</span>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class=" p-2">
+                 {{demandeService.demande.manifestation.entityOrganisation.responsableName}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row ms-5">
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>Etablissement:</span>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class=" p-2">
+                {{demandeService.demande.manifestation.entityOrganisation.establishmentName}}
+              </div>
+            </div>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Coordonnateur de la manifestation :</h4>
+          </div>
+          <div class="row ms-5">
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>NOM:</span>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="p-2">
+                {{demandeService.demande.manifestation.coordonnateur.firstName}}
+              </div></div>
+
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>PRENOM:</span>
+              </div>
+            </div>
+            <div class="col-sm-3"><div class=" p-2">
+              {{demandeService.demande.manifestation.coordonnateur.lasttName}}
+            </div></div>
+          </div>
+          <div class="row ms-5">
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>GARD:</span>
+              </div>
+            </div>
+            <div class="col-sm-3"><div class=" p-2">
+              {{demandeService.demande.manifestation.coordonnateur.grade}}
+            </div></div>
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>EMAIL:</span>
+              </div>
+            </div>
+            <div class="col-sm-3"><div class=" p-2">
+              {{demandeService.demande.manifestation.coordonnateur.email}}
+            </div></div>
+          </div>
+          <div class="row ms-5">
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>TEL:</span>
+              </div>
+            </div>
+            <div class="col-sm-3"><div class=" p-2">
+              {{demandeService.demande.manifestation.coordonnateur.tel}}
+            </div></div>
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>FAX:</span>
+              </div>
+            </div>
+            <div class="col-sm-3"><div class="p-2">
+             {{demandeService.demande.manifestation.coordonnateur.fax}}
+            </div></div>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Comité d'organisation :</h4>
+          </div>
+          <div class="m-5">
+            <table class="table ">
+              <thead>
+              <tr>
+                <th>NOM</th>
+                <th>PRENOM</th>
+                <th>ETABLISSEMENT</th>
+                <th>CONTACT</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c of committeeOrganisationService.committeeOrganisations">
+                <td>{{c.firstName}}</td>
+                <td>{{c.lastName}}</td>
+                <td>{{c.establishmentName}}</td>
+                <td>{{c.email}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Contribution des Sponsors :</h4>
+          </div>
+          <div class="m-5">
+            <table class="table ">
+              <thead>
+              <tr>
+                <th>Organisme</th>
+                <th>Montant en DH</th>
+                <th>Nature</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c of contributionSponsorService.contributionSponsors">
+                <td>{{c.organisme}}</td>
+                <td>{{c.montant}}</td>
+                <td>{{c.nature}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Contribution des établissements de l’Université :</h4>
+          </div>
+          <div class="m-5">
+            <table class="table ">
+              <thead>
+              <tr>
+                <th>Etablissement</th>
+                <th>Montant en DH</th>
+                <th>Nature</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c of contributionEstablishmentService.contributionEstablishments">
+                <td>{{c.establishmentName}}</td>
+                <td>{{c.montant}}</td>
+                <td>{{c.nature}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Soutien sollicité de l’Université :</h4>
+          </div>
+          <div class="m-5">
+            <table class="table ">
+              <thead>
+              <tr>
+                <th>Rubrique</th>
+                <th>Nombre</th>
+                <th>Montant</th>
+                <th>Montant Propose</th>
+                <th>Remarque</th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c of soutienService.soutiens">
+                <td>{{c.rubrique}}</td>
+                <td>{{c.nombre}}</td>
+                <td>{{c.montant}}</td>
+                <td><input type="text" placeholder="{{c.montantPropose}}" name="fname" [(ngModel)]="c.montantPropose"><br><br></td>
+                <td><textarea rows="3" placeholder="{{c.remarqueAdmin}}" cols="20" [(ngModel)]="c.remarqueAdmin"></textarea></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="titre">
+            <h4 class="m-2"> Contribution des participants :</h4>
+          </div>
+          <div class="m-4 "><h5 class="text-center text-danger" >Montant des frais d'inscription</h5>
+            <table class="table ">
+              <thead>
+              <tr>
+                <th>Fonction</th>
+                <th>Montant</th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c of contributionParticipantService.contributionParticipants">
+                <th>{{c.fonction}}</th>
+                <th>{{c.montant}}</th>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="m-4 "><h5 class="text-center text-danger" >Les frais d’inscription couvrent :</h5>
+            <div class="text-center m-3"><h6 class="">Pauses café</h6></div>
+            <div class="text-center m-3"><H6>Repas de midi</H6></div>
+            <div class="text-center m-3"><h6>Repas du soir</h6></div>
+            <div class="text-center m-3"><H6>Hébergement</H6></div>
+          </div>
+          <div class="row m-5">
+            <div class="col-sm-9"></div>
+            <div class="col-sm-3">
+              <button type="button" class="btn btn-lg btn-success p-1 m-2" (click)="changeAccept()"><span class="">accepter</span></button>
+              <button type="button" class="btn btn-lg btn-danger p-1 mx-3" (click)="changeRefuse()"><span>reffuser</span></button>
+            </div></div>
+          <!-- <div class="table-responsive ">
+             <table>
+               <thead>
+               <tr>
+                 <th>Intitulé de la manifestation</th>
+                 <th>Date de debut</th>
+                 <th>Date de fin</th>
+                 <th>coordenateur</th>
+                 <th>Nombre de participants prévus</th>
+                 <th>Site Web de la manifestation</th>
+                 <th>option</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr>
+                 <td>App Development</td>
+                 <td>15 Aug, 2020</td>)'
+                 <td>22 Aug, 2020</td>
+                 <td class="td-team">
+                   <div>amina charif</div>
+                 </td>
+                 <td>inconu</td>
+                 <td>inconu</td>
+
+                 <td>
+                   <button class="btn btn-dark p-1">details</button>
+
+                 </td>
+               </tr>
+               <tr>
+                 <td>Logo Design</td>
+                 <td>15 Aug, 2020</td>
+                 <td>22 Aug, 2020</td><td class="td-team">
+                 <div>salma qoumi</div>
+               </td>
+                 <td>inconu</td>
+                 <td>inconu</td>
+
+                 <td>
+                   <button class="btn btn-dark p-1">details</button>
+                 </td>
+               </tr>
+               <tr>
+                 <td>Server setup</td>
+                 <td>15 Aug, 2020</td>
+                 <td>22 Aug, 2020</td> <td class="td-team">
+                 <div>reqaya motar</div>
+               </td>
+                 <td>inconu</td>
+                 <td>inconu</td>
+
+                 <td>
+                   <button class="btn btn-dark p-1">details</button>
+                 </td>
+               </tr>
+
+
+               </tbody>
+             </table>
+           </div>-->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+</body>
+</html>
+
