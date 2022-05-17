@@ -16,6 +16,8 @@ private _soutiens=new Array<Soutien>();
     this.http.get<Array<Soutien>>("http://localhost:8070/api/v1/soutien/id/"+ id).subscribe(
       data=>{
         this.soutiens=data
+        this.calcMontantGlobale()
+        console.log(this.montantGlobal)
         console.log('sotien');
         console.log(data);
       } ,error=>{
@@ -32,7 +34,7 @@ private _soutiens=new Array<Soutien>();
     this._montantGlobal = value;
   }
 
-  /*calcMontantGlobale()
+  calcMontantGlobale()
   {
     this.montantGlobal=0;
     for(let c of this.soutiens)
@@ -40,7 +42,7 @@ private _soutiens=new Array<Soutien>();
       this.montantGlobal+=c.montantPropose
     }
   }
-   */
+
   get soutien(): Soutien {
     if (this._soutien==null){
       this._soutien=new Soutien();

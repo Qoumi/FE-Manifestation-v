@@ -38,10 +38,25 @@ export class AuthService {
         jwt != null ? this.tokenService.saveToken(jwt) : false;
         this.loadInfos();
         console.log('you are logged in successfully');
-        this.router.navigate(['/encours']);
+        for (let role of this.authenticatedUser.roles)
+        {
+          if(role=='ROLE_ADMIN')
+          {
+            this.router.navigate(['/encours']);
+          } else if(role=='ROLE_CHEF')
+          {
+            this.router.navigate(['/user-space/demandes']);
+          }
+          else
+          {
+            console.log('error admin');
+          }
+        }
+
       }, (error: HttpErrorResponse) => {
         this.error = error.error;
         console.log(error);
+        console.log('error admin');
       }
     );
   }
