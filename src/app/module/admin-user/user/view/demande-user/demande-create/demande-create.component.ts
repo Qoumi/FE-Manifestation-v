@@ -218,7 +218,7 @@ export class DemandeCreateComponent implements OnInit {
   }
 
   submit(){
-    //this.demandeService.demande.manifestation=this.manifestationService.manifestation
+    this.demandeService.demande.manifestation=this.manifestationService.manifestation
     this.save();
     this.stepp=1;
     if(this.step==4){
