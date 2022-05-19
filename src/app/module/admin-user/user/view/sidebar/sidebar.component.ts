@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-
+  stip:boolean=true;
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  clicked()
+  {
+    this.stip=true;
+  }
+  noclicked()
+  {
+    this.stip=false
+  }
 }

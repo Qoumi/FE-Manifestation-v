@@ -23,8 +23,7 @@ export class DemandeListComponent implements OnInit {
   }
 
   unshowDemande() {
-    if (this.stepShow=0){return}
-    this.stepShow--
+    this.details=false;
   }
   showDetails(){
     this.details=true;

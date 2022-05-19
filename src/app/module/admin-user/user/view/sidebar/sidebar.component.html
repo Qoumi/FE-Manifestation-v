@@ -1,6 +1,54 @@
-<div class="reseau">
-  <a href="#"><i class="fab fa-facebook-f"></i></a>
-  <a href="#"><i class="fab fa-twitter"></i></a>
-  <a href="#"><i class="fab fa-instagram-square"></i></a>
-  <a href="#"><i class="fab fa-linkedin-in"></i></a>
-</div>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light  p-0 " style="background-color: #027581 ; color: #f1f5f9;">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarLeftAlignExample"
+        aria-controls="navbarLeftAlignExample"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarLeftAlignExample">
+        <!-- Left links -->
+        <ul class="navbar-nav me-auto mb-lg-0">
+         <div class="test actived" (click)="clicked()" *ngIf="stip==true"> <li class="nav-item">
+           <a class="nav-link active" aria-current="page"><span class="souso activedd">Historique</span></a>
+         </li></div>
+          <div class="test " (click)="clicked()" *ngIf="stip==false"> <li class="nav-item">
+            <a class="nav-link " aria-current="page"><span class="souso ">Historique</span></a>
+          </li></div>
+          <div class="test" (click)="noclicked()" *ngIf="stip==true"><li class="nav-item">
+            <a class="nav-link" ><span class="souso">demandes</span></a>
+          </li>
+          </div>
+          <div class="test actived" (click)="noclicked()" *ngIf="stip==false"><li class="nav-item">
+            <a class="nav-link active" ><span class="souso activedd">demandes</span></a>
+          </li>
+          </div>
+          <div class="test">
+          <li class="nav-item">
+            <a class="nav-link "
+            ><span class="souso" >Déconnection</span></a
+            >
+          </li>
+          </div>
+        </ul>
+        <!-- Left links -->
+      </div>
+      <!-- Collapsible wrapper -->
+    </div><div class="souso">qoumisalma3@gmail.com
+  </div>
+    <!-- Container wrapper -->
+  </nav>
+
+</header>
+<div *ngIf="stip==false"><app-demande-create></app-demande-create></div>
+<div *ngIf="stip==true"><app-demande-list></app-demande-list></div>

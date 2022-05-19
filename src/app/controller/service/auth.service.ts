@@ -38,8 +38,8 @@ export class AuthService {
         jwt != null ? this.tokenService.saveToken(jwt) : false;
         this.loadInfos();
         console.log('you are logged in successfully');
-       // this.router.navigate(['/user-space/demandes']);
-        this.router.navigate(['/encours']);
+        this.router.navigate(['/sidbar']);
+       // this.router.navigate(['/encours']);
       /*  for (let role of this.authenticatedUser.authorities)
         {
           if(role=='ROLE_ADMIN')

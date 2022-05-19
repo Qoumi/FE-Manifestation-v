@@ -13,6 +13,7 @@ import {ContributionParticipantService} from "./contribution-participant.service
 import {ImplicatedEstablishmentService} from "./implicated-establishment.service";
 import {ImplicatedPartnerService} from "./implicated-partner.service";
 import {SoutienService} from "./soutien.service";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,7 @@ export class DemandeService {
               private implicatedEstablishmentService:ImplicatedEstablishmentService,
               private implicatedPartnerService:ImplicatedPartnerService,
               private soutienService:SoutienService,
+              private userService:UserService,
               private http:HttpClient,private router:Router) { }
 
   public  getListDemandes()
@@ -160,6 +162,9 @@ export class DemandeService {
     this.cmpRefDemande=this.cmpRefDemande+1;
     this.demande.ref="D"+this.cmpRefDemande;
     this.demande.etat="en cours de traitement";
+    this.demande.user=this.userService.user
+    console.log(this.demande.user
+      .username)
     if (this.demande.id==null){
     this.http.post<number>(this.urlBase + this.url + '/', this.demande).subscribe(
     data =>{if(data > 0) {

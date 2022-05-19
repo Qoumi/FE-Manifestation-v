@@ -16,6 +16,8 @@ import {AuthGuard} from "./controller/guards/auth.guard";
 import {
   DemandeDetailsComponent
 } from "./module/admin-user/user/view/demande-user/demande-details/demande-details.component";
+import {SidebarComponent} from "./module/admin-user/user/view/sidebar/sidebar.component";
+import {NavbarComponent} from "./module/admin-user/user/view/navbar/navbar.component";
 
 
 
@@ -28,6 +30,9 @@ const routes: Routes = [
    { path: 'commandes', component: CommandesComponent },
    { path: 'demande', component: DemandeCreateComponent },
    { path: 'createAccount', component: UserCreateAccountComponent },
+   { path: 'sidbar', component: SidebarComponent },
+   { path: 'test', component: NavbarComponent },
+
   { path: 'details', component:DemandeDetailsComponent},
   { path: 'demandeDetails', component:DemandeDetailsComponent},
   {

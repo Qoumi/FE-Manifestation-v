@@ -1,4 +1,5 @@
 import {Manifestation} from "./manifestation.model";
+import {User} from "./user.model";
 
 export class Demande {
   public id:number;
@@ -8,5 +9,6 @@ export class Demande {
   public motif:String;
   public createdAt:Date;
   public updatedAt:Date;
+  public user:User;
 
 }
