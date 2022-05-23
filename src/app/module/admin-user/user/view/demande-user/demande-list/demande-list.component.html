@@ -18,19 +18,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr >
+            <tr *ngFor="let c of demandeService.demandes" >
               <!--<tr *ngFor=" let c of hores | filter:userFilter.name">
                 <td *ngIf="(hores | filter: userFilter.name).length === 0">No matching elements</td>
                 <td>{{c.name}}</td>
                 -->
-              <td>la manifestation</td>
+              <td>{{c.manifestation.name}}</td>
               <td class="td-team">
-                <div>D1001</div>
+                <div>{{c.ref}}</div>
               </td>
-              <td>12/12/2000</td>
-              <td>en cours de traitement</td>
+              <td>{{c.createdAt}}</td>
+              <td [(ngModel)]="etat">{{c.etat}}</td>
               <td>
-                <button class="btn btn-dark p-1" (click)="showDetails()">details</button>
+                <button class="btn btn-dark p-1" (click)="showDetails(c.ref)"><div>details</div></button>
               </td>
             </tr>
 
@@ -47,24 +47,27 @@
 </main>
   <div class="det" *ngIf="details==true">
     <div class="row m-3">
-      <div class="quiter"><i class="fa fa-home" (click)="unshowDemande()"></i></div>
+      <div class="quiter"><i  class="fa fa-home" (click)="unshowDemande()"></i></div>
     </div>
     <div class="row m-3">
       <div class="col p-2"><span class="text-danger">La demande:</span></div>
-      <div class="col p-2">manifestation</div>
+      <div class="col p-2">{{demandeService.demande.manifestation.name}}</div>
     </div>
     <div class="row m-3 ">
       <div class="col p-1"><span class="text-danger">Reference:</span></div>
-      <div class="col p-1">D17587</div>
+      <div class="col p-1">{{demandeService.demande.ref}}</div>
     </div>
     <div class="row m-3">
       <div class="col p-1 "> <span class="text-danger">Status:</span></div>
-      <div class="col p-1">en cours de traitement</div>
+      <div class="col p-1">{{demandeService.demande.etat}}</div>
     </div>
     <div class="row m-3">
-      <div class="col p-1 m-2"><button class="btn btn-success p-2 m-2">details</button></div>
-      <div class="col p-1 m-2"><button class="btn btn-warning p-2 m-2">modefier</button></div>
-      <div class="col p-1 m-2"><button class="btn btn-danger p-2 m-2">annuler</button></div>
+
+      <div class="col p-1 m-2">
+        <button class="btn btn-warning p-2 m-2" *ngIf="demandeService.demande.etat=='la demande annulé'"  (click)="edit(ref)">modefier</button></div>
+      <div class="col p-1 m-2">
+        <button class="btn btn-success p-2 m-2" *ngIf="demandeService.demande.etat=='la demande accept'||demandeService.demande.etat=='la demande annulé' " (click)="detail(ref)">details</button>
+        <button class="btn btn-danger p-2 m-2" *ngIf="demandeService.demande.etat=='en cours de traitement'" (click)="annule()">annuler</button></div>
     </div>
   </div>
 

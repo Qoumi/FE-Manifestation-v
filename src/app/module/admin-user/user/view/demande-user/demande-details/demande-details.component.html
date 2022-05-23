@@ -1,229 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+</head>
+<body>
+<div class="main-content">
 
-<section xmlns="http://www.w3.org/1999/html" style="background-color: floralwhite;margin-top: 50px">
-  <div class="col-md-8 offset-2" style="background-color: antiquewhite">
-    <header>
-      <table class="table">
-        <thead>
-        <th>Demande</th>
-        <th>Référence</th>
-        <th>Status</th>
-        <th>Date start</th>
-        <th>remarque</th>
-        </thead>
-        <tbody>
-        <tr>
-          <td>organisation de colloque</td>
-          <td>C13e0075</td>
-          <td>en cours de traitement</td>
-          <td>22-04-2022</td>
-          <td>pas de remarque</td>
-        </tr>
-        </tbody>
-      </table>
-   </header>
-    <body class="mt-4" style="background-color: beige">
-    <h2 class="text-center">Manifestation</h2>
+  <header>
     <div class="row">
-      <div class="p-field col-md-3">
-      <label for="1">Intitulé</label>
-      <input  type="text" pInputText [disabled]="true"
-             placeholder="intitulé"  [(ngModel)]="manifestation.name"
-             id="1" [(ngModel)]="manifestation.name"
-             autofocus>
-      </div>
-      <div class="p-field col-md-3">
-      <label for="2">Lieu d'organisation</label>
-      <input type="text" pInputText [disabled]="true"
-             placeholder="Reference"  [(ngModel)]="manifestation.lieu"
-             id="2" [(ngModel)]="manifestation.lieu"
-             autofocus>
-      </div>
-      <div class="p-field  col-md-3">
-      <label for="3">nombre des participants</label>
-      <input  type="text" pInputText [disabled]="true"
-             placeholder="Reference"  [(ngModel)]="manifestation.nbrParticipantPrevu"
-             id="3" [(ngModel)]="manifestation.nbrParticipantPrevu"
-             autofocus>
-      </div>
-      <div class="p-field col-md-3">
-      <label for="4">Site Web de manifestation</label>
-      <input  type="text" pInputText [disabled]="true"
-             placeholder="Reference"  [(ngModel)]="manifestation.siteWeb"
-             id="4" [(ngModel)]="manifestation.siteWeb"
-             autofocus>
-      </div>
+      <div class="col"><span class="text-danger" style="font-weight: bold">LA REFERENCE DE DEMANDE:</span>  </div>
+      <div class="col">{{demandeService.demande.ref}}</div>
+      <div class="col"><span class="text-danger" style="font-weight: bold">LA DATE DE CREATION:</span>  </div>
+      <div class="col">{{demandeService.demande.createdAt}}</div>
     </div>
+  </header>
 
-    <div class="row mt-3">
-      <div class="p-field col-md-4">
-        <label for="5">Etendue</label>
-        <input  type="text" pInputText [disabled]="true"
-                placeholder="etendue"  [(ngModel)]="manifestation.etendue"
-                id="5" [(ngModel)]="manifestation.etendue"
-                autofocus>
-      </div>
-      <div class="p-field  col-md-4">
-        <label for="6">Date début</label>
-        <input  type="text" pInputText [disabled]="true"
-                placeholder="date de début"  [(ngModel)]="manifestation.dateStart"
-                id="6" [(ngModel)]="manifestation.dateStart"
-                autofocus>
-      </div>
-      <div class="p-field  col-md-4">
-        <label for="7">Date de fin</label>
-        <input  type="text" pInputText [disabled]="true"
-                placeholder="date de fin"  [(ngModel)]="manifestation.dateEnd"
-                id="7" [(ngModel)]="manifestation.dateEnd"
-                autofocus>
-      </div>
-    </div>
+  <main>
+    <h2 class="dash-title">details</h2>
 
-<div class="mt-4">
-  <h4 class="text-center">Coordonnateur de la manifestation</h4>
-  <div class="row">
-    <div class="p-field col-md-3">
-      <label >Prénom coordonnateur</label>
-      <input  type="text" pInputText [disabled]="true"
-              placeholder="prénom"  [(ngModel)]="manifestation.coordonnateur.firstName"
-               [(ngModel)]="manifestation.name"
-              autofocus>
-    </div>
-    <div class="p-field col-md-3">
-      <label>Nom coordonnateur</label>
-      <input type="text" pInputText [disabled]="true"
-             placeholder="nom"  [(ngModel)]="manifestation.coordonnateur.lastName"
-             [(ngModel)]="manifestation.lieu"
-             autofocus>
-    </div>
-    <div class="p-field  col-md-3">
-      <label >Etablissement</label>
-      <input  type="text" pInputText [disabled]="true"
-              placeholder="etablissemnt"  [(ngModel)]="manifestation.coordonnateur.establishmentName"
-              [(ngModel)]="manifestation.nbrParticipantPrevu"
-              autofocus>
-    </div>
-    <div class="p-field col-md-3">
-      <label >Grade</label>
-      <input  type="text" pInputText [disabled]="true"
-              placeholder="grade"  [(ngModel)]="manifestation.coordonnateur.grade"
-               [(ngModel)]="manifestation.siteWeb"
-              autofocus>
-    </div>
-  </div>
+    <section class="recent">
+      <div class="activity-grid">
+        <div class="activity-card">
+          <div class="titre">
+            <h4 class="m-2">Expéditeur du demande :</h4>
+          </div>
+          <div class="ms-5">
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span> NOM:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{authenticatedUser.username}}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>PRENOM:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{authenticatedUser.prenom}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>GMAIL:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{authenticatedUser.email}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Informations concernant la manifestation</h4>
+          </div>
+          <div class="ms-5">
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>Intitulé de la manifestation:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.name}}</div>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span> LIEU:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.lieu}}</div>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>Site Web de la manifestation:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.siteWeb}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>DATE DE DEBUT:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.dateStart}}</div>
+                  </div>
+                </div>
 
-  <div class="row mt-3">
-    <div class="p-field col-md-4">
-      <label >Email</label>
-      <input  type="text" pInputText [disabled]="true"
-              placeholder="email"  [(ngModel)]="manifestation.coordonnateur.email"
-             [(ngModel)]="manifestation.etendue"
-              autofocus>
-    </div>
-    <div class="p-field  col-md-4">
-      <label >Tel</label>
-      <input  type="text" pInputText [disabled]="true"
-              placeholder="tel"  [(ngModel)]="manifestation.coordonnateur.tel"
-              [(ngModel)]="manifestation.dateStart"
-              autofocus>
-    </div>
-    <div class="p-field  col-md-4">
-      <label >Fax</label>
-      <input  type="text" pInputText [disabled]="true"
-              placeholder="fax"  [(ngModel)]="manifestation.coordonnateur.fax"
-              [(ngModel)]="manifestation.dateEnd"
-              autofocus>
-    </div>
-  </div>
+                <div class="row ">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>DATE DE FIN:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.dateEnd}}</div>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-sm-6">
+                    <div class="card-body p-2">
+                      <span>Nombre de participants prévus:</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="p-2">{{demandeService.demande.manifestation.nbrParticipantPrevu}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ms-5">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="card-body p-2 border-top">
+                  <span>Etablissement(s) de l’UCAM impliqué(s) dans l’organisation:</span>
+                </div>
+              </div>
+              <div class="col-sm-3 border-top">
+                <div class="p-2" *ngFor="let c of implicatedEstablishmentService.implicatedEstablishments">{{c.name}}</div>
+              </div>
+              <div class="col-sm-3">
+                <div class="card-body p-2 border-top">
+                  <span>Partenaire(s) impliqué(s)</span>
+                </div>
+              </div>
+              <div class="col-sm-3 border-top">
+                <div class="p-2" *ngFor="let c of implicatedPartnerService.implicatedPartnerServices">{{c.name}}</div>
+
+              </div>
+            </div>
+          </div>
+          <div class="row border-top ms-5">
+            <div class="col-sm-3 " > <div class="card-body p-2 ">
+              <span class="text-danger">MONTANT GLOBALE</span>
+            </div></div>
+            <div class="col-sm-3 p-2" > {{soutienService.montantGlobal}}DH </div>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Entité de recherche organisant la manifestation :</h4>
+          </div>
+          <div class="ms-5">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="card-body p-2">
+                  <span>Nom de l’entité de recherche:</span>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class=" p-2">
+                  {{demandeService.demande.manifestation.entityOrganisation.name}}
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="card-body p-2">
+                  <span>Responsable de l’entité</span>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class=" p-2">
+                  {{demandeService.demande.manifestation.entityOrganisation.responsableName}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row ms-5">
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>Etablissement:</span>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class=" p-2">
+                {{demandeService.demande.manifestation.entityOrganisation.establishmentName}}
+              </div>
+            </div>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Coordonnateur de la manifestation :</h4>
+          </div>
+          <div class="row ms-5">
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>NOM:</span>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="p-2">
+                {{demandeService.demande.manifestation.coordonnateur.firstName}}
+              </div></div>
+
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>PRENOM:</span>
+              </div>
+            </div>
+            <div class="col-sm-3"><div class=" p-2">
+              {{demandeService.demande.manifestation.coordonnateur.lastName}}
+            </div></div>
+          </div>
+          <div class="row ms-5">
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>GARD:</span>
+              </div>
+            </div>
+            <div class="col-sm-3"><div class=" p-2">
+              {{demandeService.demande.manifestation.coordonnateur.grade}}
+            </div></div>
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>EMAIL:</span>
+              </div>
+            </div>
+            <div class="col-sm-3"><div class=" p-2">
+              {{demandeService.demande.manifestation.coordonnateur.email}}
+            </div></div>
+          </div>
+          <div class="row ms-5">
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>TEL:</span>
+              </div>
+            </div>
+            <div class="col-sm-3"><div class=" p-2">
+              {{demandeService.demande.manifestation.coordonnateur.tel}}
+            </div></div>
+            <div class="col-sm-3">
+              <div class="card-body p-2">
+                <span>FAX:</span>
+              </div>
+            </div>
+            <div class="col-sm-3"><div class="p-2">
+              {{demandeService.demande.manifestation.coordonnateur.fax}}
+            </div></div>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Comité d'organisation :</h4>
+          </div>
+          <div class="m-5">
+            <table class="table ">
+              <thead>
+              <tr>
+                <th>NOM</th>
+                <th>PRENOM</th>
+                <th>ETABLISSEMENT</th>
+                <th>CONTACT</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c of committeeOrganisationService.committeeOrganisations">
+                <td>{{c.firstName}}</td>
+                <td>{{c.lastName}}</td>
+                <td>{{c.establishmentName}}</td>
+                <td>{{c.email}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Contribution des Sponsors :</h4>
+          </div>
+          <div class="m-5">
+            <table class="table ">
+              <thead>
+              <tr>
+                <th>Organisme</th>
+                <th>Montant en DH</th>
+                <th>Nature</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c of contributionSponsorService.contributionSponsors">
+                <td>{{c.organisme}}</td>
+                <td>{{c.montant}}</td>
+                <td>{{c.nature}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Contribution des établissements de l’Université :</h4>
+          </div>
+          <div class="m-5">
+            <table class="table ">
+              <thead>
+              <tr>
+                <th>Etablissement</th>
+                <th>Montant en DH</th>
+                <th>Nature</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c of contributionEstablishmentService.contributionEstablishments">
+                <td>{{c.establishmentName}}</td>
+                <td>{{c.montant}}</td>
+                <td>{{c.nature}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="titre">
+            <h4 class="m-2">Soutien sollicité de l’Université :</h4>
+          </div>
+          <div class="m-5">
+            <table class="table ">
+              <thead>
+              <tr>
+                <th>Rubrique</th>
+                <th>Nombre</th>
+                <th>Montant</th>
+                <th>Montant Propose</th>
+                <th>Remarque</th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c of soutienService.soutiens">
+                <td>{{c.rubrique}}</td>
+                <td>{{c.nombre}}</td>
+                <td>{{c.montant}}</td>
+                <td [(ngModel)]="c.montantPropose"></td>
+                <td [(ngModel)]="c.remarqueAdmin"></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="titre">
+            <h4 class="m-2"> Contribution des participants :</h4>
+          </div>
+          <div class="m-4 "><h5 class="text-center text-danger" >Montant des frais d'inscription</h5>
+            <table class="table ">
+              <thead>
+              <tr>
+                <th>Fonction</th>
+                <th>Montant</th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c of contributionParticipantService.contributionParticipants">
+                <th>{{c.fonction}}</th>
+                <th>{{c.montant}}</th>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="m-4 "><h5 class="text-center text-danger" >Les frais d’inscription couvrent :</h5>
+            <div class="text-center m-3"><h6 class="">Pauses café</h6></div>
+            <div class="text-center m-3"><H6>Repas de midi</H6></div>
+            <div class="text-center m-3"><h6>Repas du soir</h6></div>
+            <div class="text-center m-3"><H6>Hébergement</H6></div>
+          </div>
+
+          <!-- <div class="table-responsive ">
+             <table>
+               <thead>
+               <tr>
+                 <th>Intitulé de la manifestation</th>
+                 <th>Date de debut</th>
+                 <th>Date de fin</th>
+                 <th>coordenateur</th>
+                 <th>Nombre de participants prévus</th>
+                 <th>Site Web de la manifestation</th>
+                 <th>option</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr>
+                 <td>App Development</td>
+                 <td>15 Aug, 2020</td>)'
+                 <td>22 Aug, 2020</td>
+                 <td class="td-team">
+                   <div>amina charif</div>
+                 </td>
+                 <td>inconu</td>
+                 <td>inconu</td>
+
+                 <td>
+                   <button class="btn btn-dark p-1">details</button>
+
+                 </td>
+               </tr>
+               <tr>
+                 <td>Logo Design</td>
+                 <td>15 Aug, 2020</td>
+                 <td>22 Aug, 2020</td><td class="td-team">
+                 <div>salma qoumi</div>
+               </td>
+                 <td>inconu</td>
+                 <td>inconu</td>
+
+                 <td>
+                   <button class="btn btn-dark p-1">details</button>
+                 </td>
+               </tr>
+               <tr>
+                 <td>Server setup</td>
+                 <td>15 Aug, 2020</td>
+                 <td>22 Aug, 2020</td> <td class="td-team">
+                 <div>reqaya motar</div>
+               </td>
+                 <td>inconu</td>
+                 <td>inconu</td>
+
+                 <td>
+                   <button class="btn btn-dark p-1">details</button>
+                 </td>
+               </tr>
+
+
+               </tbody>
+             </table>
+           </div>-->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
 </div>
 
-<div class="mt-4">
-  <h4 class="text-center">Entité chargé de l'organisation</h4>
-  <div class="row mt-3">
-    <div class="p-field col-md-4">
-      <label >Nom d'entité d'organisation</label>
-      <input  type="text" pInputText [disabled]="true"
-              placeholder="nom d'entité"  [(ngModel)]="manifestation.entityOrganisation.name"
-              [(ngModel)]="manifestation.etendue"
-              autofocus>
-    </div>
-    <div class="p-field  col-md-4">
-      <label >responsable d'entité</label>
-      <input  type="text" pInputText [disabled]="true"
-              placeholder="responsable"  [(ngModel)]="manifestation.entityOrganisation.responsableName"
-              [(ngModel)]="manifestation.dateStart"
-              autofocus>
-    </div>
-    <div class="p-field  col-md-4">
-      <label >etablissemnet d'entité</label>
-      <input  type="text" pInputText [disabled]="true"
-              placeholder="etablissement"  [(ngModel)]="manifestation.entityOrganisation.establishmentName"
-              [(ngModel)]="manifestation.dateEnd"
-              autofocus>
-    </div>
-  </div>
-</div>
-<div class="row">
-    <div class="mt-4 col-md-6">
-      <table class="table table-bordered">
-        <thead>
-        <th>Etablissements impliqué dans l'organisation</th>
-        </thead>
-        <tbody>
-        <tr>
-          <td *ngFor="let e of manifestation.implicatedEstablishments">{{e.name}}</td>
-
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="mt-4 col-md-6">
-      <table class="table table-bordered">
-        <thead>
-        <th>Partenaires impliqué dans l'organisation</th>
-        </thead>
-        <tbody>
-        <tr>
-          <td *ngFor="let p of manifestation.implicatedPartners">{{p.name}}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-</div>
-    <div class="mt-4">
-      <h4 class="text-center">Les memnres de commité d'organisation</h4>
-      <table class="table">
-        <thead>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Etablissement</th>
-        <th>Université</th>
-        <th>tel</th>
-        <th>Email</th>
-        </thead>
-        <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        </tbody>
-      </table>
-
-    </div>
-    </body>
-
-
-
-  </div>
-<div class="col-md-2 offset-5">
-  <div class="row">
-  <button class="col-md-6 btn-outline-primary" (click)="showDialogEdit()">Modifier</button>
-  <button class="col-md-6 btn-outline-danger">supprimer</button>
-  </div>
-</div>
-</section>
-
+</body>
+</html>
 

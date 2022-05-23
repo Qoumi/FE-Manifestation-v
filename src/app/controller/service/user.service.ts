@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {User} from "../model/user.model";
 import {DemandeService} from "./demande.service";
 import {AuthService} from "./auth.service";
+import {Demande} from "../model/demande.model";
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,12 @@ import {AuthService} from "./auth.service";
 export class UserService {
   private _user : User=new User();
 
-  constructor(private authService:AuthService) { }
 
+  constructor(private authService:AuthService) { }
   get user(): User {
     if(this._user==null){
       this._user=new User();
     }
-    this._user=this.authService.authenticatedUser
     return this._user;
   }
 

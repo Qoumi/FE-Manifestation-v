@@ -14,6 +14,8 @@ import {ImplicatedEstablishmentService} from "./implicated-establishment.service
 import {ImplicatedPartnerService} from "./implicated-partner.service";
 import {SoutienService} from "./soutien.service";
 import {UserService} from "./user.service";
+import {User} from "../model/user.model";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,7 @@ export class DemandeService {
   private _demandes:Array<Demande>;
   private isSaveValidated:Boolean;
   private cmpRefDemande:number=1000;
+  private _user:User;
   reference:String;
   constructor(private contributionParticipantService:ContributionParticipantService,
               private contributionEstablishmentService:ContributionEstablishmentService,
@@ -36,8 +39,45 @@ export class DemandeService {
               private implicatedPartnerService:ImplicatedPartnerService,
               private soutienService:SoutienService,
               private userService:UserService,
+              private authService:AuthService,
               private http:HttpClient,private router:Router) { }
 
+  get user(): User {
+    if(this._user==null)
+    {
+      this._user=new User();
+    }
+    this._user.username=this.authService.authenticatedUser.username;
+    this._user.demandes.push({...this.demande})
+    return this._user;
+  }
+
+  set user(value: User) {
+    this._user = value;
+  }
+ public findByUsername()
+ {
+   this.http.get<Array<Demande>>("http://localhost:8070/api/v1/demande/demandesUer/"+this.user.username).subscribe(
+     data=>{
+       this.demandes=data
+       console.log(this.demandes)
+       console.log(this.user.username)
+     } ,error=>{
+       console.log(error)
+     }
+   )
+ }
+ public findByref(ref:String)
+ {
+   this.http.get<Demande>("http://localhost:8070/api/v1/demande/reference/"+ref).subscribe(
+     data=>{
+       this.demande=data
+       console.log(data)
+     } ,error=>{
+       console.log(error)
+     }
+   )
+ }
   public  getListDemandes()
   {
     this.http.get<Array<Demande>>("http://localhost:8070/api/v1/demande/refetate/en cours de traitement").subscribe(
@@ -82,6 +122,13 @@ export class DemandeService {
   {
     this.http.put<number>("http://localhost:8070/api/v1/demande/",this.demande).subscribe(
       data=>{
+        if(data > 0) {
+          this.isSaveValidated=true;
+          this.demandes.push({...this.demande});
+        } else {
+          this.isSaveValidated=false;
+          console.log('error de creation de commande' + data);
+        }
         console.log(data);
       } ,error=>{
         console.log(error)
@@ -92,7 +139,14 @@ export class DemandeService {
   public changeAccept()
   {
     alert('la demande est accepte')
-    this.demande.etat="la demande accept";
+    this.demande.etat="la demande accept"
+
+  }
+  public changeAnnule()
+  {
+    alert('la demande est annulé')
+    this.demande.etat="la demande annulé";
+    this.update();
   }
   public changerefuser()
   {
@@ -104,10 +158,38 @@ export class DemandeService {
     this.http.get<Demande>("http://localhost:8070/api/v1/demande/reference/"+ this.reference).subscribe(
       data=>{
         this.demande=data
-        console.log('details bien');
+        console.log('detai1');
         console.log(this.demande.id);
         console.log(data);
         this.details(this.demande.manifestation.id);
+      } ,error=>{
+        console.log(error)
+      }
+    )
+  }
+  public  getDetail()
+  {
+    this.http.get<Demande>("http://localhost:8070/api/v1/demande/reference/"+ this.reference).subscribe(
+      data=>{
+        this.demande=data
+        console.log('detail2');
+        console.log(this.demande.id);
+        console.log(data);
+        this.detail(this.demande.manifestation.id);
+      } ,error=>{
+        console.log(error)
+      }
+    )
+  }
+  public  getEdit()
+  {
+    this.http.get<Demande>("http://localhost:8070/api/v1/demande/reference/"+this.reference).subscribe(
+      data=>{
+        this.demande=data
+        this.edit(this.demande.manifestation.id);
+        console.log('EDIT');
+        console.log(data);
+        console.log("dedede")
       } ,error=>{
         console.log(error)
       }
@@ -121,9 +203,31 @@ export class DemandeService {
     this.contributionEstablishmentService.getListContributionEstablishments(id);
     this.contributionSponsorService.getContributionSponsors(id);
     this.committeeOrganisationService.getListcommitteeOrganisation(id);
-
     console.log(this.reference);
     this.router.navigate(['/details1']);
+  }
+  public detail(id: number)
+  { this.soutienService.getSoutiens(id)
+    this.implicatedEstablishmentService.getImplicatedEstablishments(id)
+    this.implicatedPartnerService.getImplicatedPartners(id)
+    this.contributionParticipantService.getListContributionParticipants(id)
+    this.contributionEstablishmentService.getListContributionEstablishments(id);
+    this.contributionSponsorService.getContributionSponsors(id);
+    this.committeeOrganisationService.getListcommitteeOrganisation(id);
+    console.log(this.reference);
+    this.router.navigate(['/details']);
+  }
+  public edit(id: number)
+  {
+    this.soutienService.getSoutiens(id)
+    this.implicatedEstablishmentService.getImplicatedEstablishments(id)
+    this.implicatedPartnerService.getImplicatedPartners(id)
+    this.contributionParticipantService.getListContributionParticipants(id)
+    this.contributionEstablishmentService.getListContributionEstablishments(id);
+    this.contributionSponsorService.getContributionSponsors(id);
+    this.committeeOrganisationService.getListcommitteeOrganisation(id);
+    console.log(this.reference);
+    this.router.navigate(['/edit']);
   }
   public history()
   {
@@ -162,12 +266,10 @@ export class DemandeService {
     this.cmpRefDemande=this.cmpRefDemande+1;
     this.demande.ref="D"+this.cmpRefDemande;
     this.demande.etat="en cours de traitement";
-    this.demande.user=this.userService.user
-    console.log(this.demande.user
-      .username)
     if (this.demande.id==null){
-    this.http.post<number>(this.urlBase + this.url + '/', this.demande).subscribe(
+    this.http.put<number>(this.urlBase + "/api/v1/user" + '/', this.user).subscribe(
     data =>{if(data > 0) {
+      alert(data)
       this.isSaveValidated=true;
       this.demandes.push({...this.demande});
       } else {

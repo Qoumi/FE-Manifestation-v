@@ -13,11 +13,10 @@ import {DemandeUserComponent} from "./module/admin-user/user/view/demande-user/d
 import {DemandeListComponent} from "./module/admin-user/user/view/demande-user/demande-list/demande-list.component";
 import {AppComponent} from "./app.component";
 import {AuthGuard} from "./controller/guards/auth.guard";
-import {
-  DemandeDetailsComponent
-} from "./module/admin-user/user/view/demande-user/demande-details/demande-details.component";
+import { DemandeDetails1Component } from './module/admin-user/admin/view/demande-admin/demande-details1/demande-details1.component';
 import {SidebarComponent} from "./module/admin-user/user/view/sidebar/sidebar.component";
 import {NavbarComponent} from "./module/admin-user/user/view/navbar/navbar.component";
+import {DemandeDetailsComponent} from "./module/admin-user/user/view/demande-user/demande-details/demande-details.component";
 
 
 
@@ -34,7 +33,7 @@ const routes: Routes = [
    { path: 'test', component: NavbarComponent },
 
   { path: 'details', component:DemandeDetailsComponent},
-  { path: 'demandeDetails', component:DemandeDetailsComponent},
+
   {
     path: 'user-space',
     children: [{

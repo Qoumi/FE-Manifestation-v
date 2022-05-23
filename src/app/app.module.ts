@@ -30,11 +30,13 @@ import {DemandeUserComponent} from "./module/admin-user/user/view/demande-user/d
 import {DemandeListComponent} from "./module/admin-user/user/view/demande-user/demande-list/demande-list.component";
 import { NavbarComponent } from './module/admin-user/user/view/navbar/navbar.component';
 import { SidebarComponent } from './module/admin-user/user/view/sidebar/sidebar.component';
-import {DemandeDetailsComponent} from "./module/admin-user/user/view/demande-user/demande-details/demande-details.component";
-import { DemandeDetails1Component } from './module/admin-user/admin/view/demande-admin/demande-details1/demande-details1.component';
+import {DemandeDetails1Component} from "./module/admin-user/admin/view/demande-admin/demande-details1/demande-details1.component";
 import { DemandeEditComponent } from './module/admin-user/user/view/demande-user/demande-edit/demande-edit.component';
 import {RouterModule} from "@angular/router";
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {DemandeDetailsComponent} from "./module/admin-user/user/view/demande-user/demande-details/demande-details.component";
+import {MatIconModule} from "@angular/material/icon";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,11 +56,12 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     DemandeListComponent,
     NavbarComponent,
     SidebarComponent,
-    DemandeDetailsComponent,
-    DemandeEditComponent,
     DemandeDetails1Component,
+    DemandeEditComponent,
+    DemandeDetailsComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
@@ -67,12 +70,15 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     AppRoutingModule,
     UserRoutingModule,
     RouterModule.forRoot([
-      { path: 'encours', component: DemandeEnCoursComponent },
-      { path: 'history', component: DemandeHistoryComponent },
-      { path: 'details1', component: DemandeDetails1Component },
+      {path: 'encours', component: DemandeEnCoursComponent},
+      {path: 'history', component: DemandeHistoryComponent},
+      {path: 'details1', component: DemandeDetails1Component},
+      {path: 'edit', component: DemandeEditComponent},
+      {path: 'navbar', component:NavbarComponent},
 
 
-    ])
+    ]),
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

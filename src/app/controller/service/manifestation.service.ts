@@ -15,9 +15,21 @@ export class ManifestationService {
   private _implicatedPartner:ImplicatedPartner;
   private _implicatedPartners:Array<ImplicatedPartner>;
   private _manifestation:Manifestation;
+  private _manifestation1:Manifestation;
   private _index: number;
 
   constructor(private committeeOrganisationService:CommitteeOrganisationService,private entityOrganisationService:EntityOrganisationService,private coordonnateurService:CoordonnateurService) { }
+
+  get manifestation1(): Manifestation {
+    if(this._manifestation==null){
+      this._manifestation=new Manifestation();
+    }
+    return this._manifestation1;
+  }
+
+  set manifestation1(value: Manifestation) {
+    this._manifestation1 = value;
+  }
 
   public addImplicatedPartner() {
     this.implicatedPartners.push({...this.implicatedPartner});
